@@ -1,38 +1,45 @@
 import * as React from "react"
+import './index.css'
 import {
   ChakraProvider,
-  Box,
+  Center,
   Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
-  theme,
 } from "@chakra-ui/react"
-import { ColorModeSwitcher } from "./ColorModeSwitcher"
-import { Logo } from "./Logo"
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import {theme} from './constants/theme'
+import Mobile from './assets/json/mobile.json'
+import { useWindowSize } from "rooks";
+import Lottie from "lottie-react";
+// import { ColorModeSwitcher } from "./ColorModeSwitcher"
+//<ColorModeSwitcher justifySelf="flex-end" />
 
-export const App = () => (
-  <ChakraProvider theme={theme}>
-    <Box textAlign="center" fontSize="xl">
-      <Grid minH="100vh" p={3}>
-        <ColorModeSwitcher justifySelf="flex-end" />
-        <VStack spacing={8}>
-          <Logo h="40vmin" pointerEvents="none" />
-          <Text>
-            Edit <Code fontSize="xl">src/App.tsx</Code> and save to reload.
+
+export const App = () => {
+
+  const { innerWidth }: any = useWindowSize();
+  if (innerWidth < 930) {
+    return (
+      <>
+        <Center w={"100%"} flexDir="column" px="3%">
+          <Lottie animationData={Mobile} style={{ height: 400 }} />
+          <Text fontSize={"20px"} textAlign="center" fontFamily="Gopher">
+            Please open the page in a web browser, mobile view coming soon..
+            Stay tuned with VenDAO!
           </Text>
-          <Link
-            color="teal.500"
-            href="https://chakra-ui.com"
-            fontSize="2xl"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn Chakra
-          </Link>
-        </VStack>
-      </Grid>
-    </Box>
+        </Center>
+      </>
+    );
+  }
+
+  return (
+  <ChakraProvider theme={theme}>
+      <Router>
+        <Routes>
+         <Route index path="/" element={<Home />} />
+          {/* <Route path="/swap" element={<Swap />} /> */}
+        </Routes>
+       </Router>
   </ChakraProvider>
-)
+  )
+ }
