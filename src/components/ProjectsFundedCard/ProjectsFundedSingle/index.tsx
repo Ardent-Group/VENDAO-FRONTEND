@@ -1,0 +1,183 @@
+import { useState } from 'react';
+import {
+    Button, 
+    Flex, 
+    Image,
+    Text,
+    SimpleGrid, 
+    HStack,
+    useDisclosure
+  } from '@chakra-ui/react'
+import { nanoid } from '@reduxjs/toolkit'
+import { VENDAO_SVG } from '../../../assets/svg';
+import { projectsfundeddetail } from '../../../utils/products'
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import Claim from '../../Modals/Claim';
+
+const fadeIn = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const ProjectsFunded = () => {
+
+    const { ref, inView } = useInView({
+        triggerOnce: true,
+    });
+
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const productsPerPage = 9;
+    const {isOpen, onClose, onOpen} = useDisclosure();
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    // Scroll back to top
+    window.scrollTo(0, 0); 
+  };
+
+  const startIndex = (currentPage - 1) * productsPerPage;
+  const visibleProjects = projectsfundeddetail.slice(
+    startIndex,
+    startIndex + productsPerPage
+  );
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+       // Scroll back to top
+      window.scrollTo(0, 0); 
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+       // Scroll back to top
+      window.scrollTo(0, 0); 
+    }
+  };
+
+  const totalPages = Math.ceil(projectsfundeddetail.length / productsPerPage);
+
+  return (
+    <>
+    <SimpleGrid columns={{ sm: 2, md: 3, lg: 4 }} spacing={5}
+     ref={ref}
+     style={{ opacity: inView ? 1 : 0, transition: "opacity 0.5s" }}    
+    >
+    {visibleProjects.map((e: any) => (
+     <motion.div
+      variants={fadeIn}
+      initial="hidden"
+      animate={inView ? "visible" : "hidden"}
+      transition={{ duration: 0.5 }}
+      key={nanoid()}
+     >
+    <Flex
+      background="#F8F8F8"
+      borderRadius="20px"
+      p="20px 40px"
+      w="100%"
+      h="100%"
+      flexDir="column"
+      key={nanoid()}
+      justify="center"
+      alignItems="center"
+     >
+        <Image src={e.projectLogo} alt="" h="48px" w="100px" />
+
+        <Text color="#404040"
+        fontSize="14px"
+        fontWeight="500"
+        fontFamily="Gopher"
+        mt="10px"
+        >
+         {e.name}
+        </Text>
+
+        <Text color="#404040"
+        fontSize="16px"
+        fontWeight="500"
+        fontFamily="Gopher2"
+        mt="16px"
+        >
+         {e.desc}
+        </Text>
+
+        <Button
+        mt="12px"
+        borderRadius="10px"
+        bg="#B5FF45"
+        _hover={{ bg: "#D9D9D9" }}
+        _focus={{ bg: "#8AE400" }}
+        onClick={onOpen}
+        >
+            <Text color="#171717" fontWeight="700" fontSize="16px">Claim</Text>
+        </Button>
+     
+    </Flex>
+    </motion.div>
+    ))}
+    </SimpleGrid>
+
+          {/* --------------------- Pagination ---------------------- */}
+      <Flex justify="center" alignItems="center" mt="80px">
+        <HStack alignItems="center">
+          <Button
+            bg="transparent"
+            _hover={{ bg: '#D9D9D9', color: 'white' }}
+            borderRadius="10px"
+            w="50px"
+            h="50px"
+            p="10px 16px"
+            onClick={handlePrevPage}
+            disabled={currentPage === 1}
+          >
+            <HStack>{VENDAO_SVG().arrowLeft()}</HStack>
+          </Button>
+
+          {[...Array(totalPages)].map((_, index) => (
+            <Button
+              key={index + 1}
+              bg="transparent"
+              _hover={{ bg: '#171717', color: 'white' }}
+              _focus={{ bg: '#171717', color: 'white' }}
+              borderRadius="10px"
+              w="50px"
+              h="50px"
+              p="10px 16px"
+              onClick={() => handlePageChange(index + 1)}
+              isActive={currentPage === index + 1}
+            >
+              <Text fontSize="16px" fontWeight="700" fontFamily="Gopher">
+                {index + 1}
+              </Text>
+            </Button>
+          ))}
+
+          <Button
+            bg="transparent"
+            _hover={{ bg: '#D9D9D9', color: 'white' }}
+            borderRadius="10px"
+            w="50px"
+            h="50px"
+            p="10px 16px"
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+          >
+            <HStack>{VENDAO_SVG().arrowRight2()}</HStack>
+          </Button>
+        </HStack>
+      </Flex>
+
+     <Claim 
+      isOpen={isOpen}
+      onClose={onClose}
+     />
+
+    </>
+  )
+}
+
+export default ProjectsFunded

@@ -4,11 +4,14 @@ import {
     Image,
     Text,
     SimpleGrid, 
+    useDisclosure
   } from '@chakra-ui/react'
 import { nanoid } from '@reduxjs/toolkit'
-import { projectsfundeddetail } from '../../utils/products'
+import { projectsfundeddetail } from '../../../utils/products'
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { useNavigate } from 'react-router-dom';
+import Claim from '../../Modals/Claim';
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -20,9 +23,16 @@ const ProjectsFunded = () => {
     const { ref, inView } = useInView({
         triggerOnce: true,
     });
+    const {isOpen, onClose, onOpen} = useDisclosure();
+    let navigate = useNavigate();
+
+    const handleViewMore = () => {
+      navigate('/projects');
+      window.scrollTo(0, 0); // Scroll to top
+    };
 
   return (
-    <>
+    <Flex flexDir="column">
     <SimpleGrid columns={{ sm: 2, md: 3, lg: 4 }} spacing={5}
      ref={ref}
      style={{ opacity: inView ? 1 : 0, transition: "opacity 0.5s" }}    
@@ -70,7 +80,9 @@ const ProjectsFunded = () => {
         mt="12px"
         borderRadius="10px"
         bg="#B5FF45"
-        _hover={{ bg:"#B5FF45" }}
+        _hover={{ bg: "#D9D9D9" }}
+        _focus={{ bg: "#8AE400" }}
+        onClick={onOpen}
         >
             <Text color="#171717" fontWeight="700" fontSize="16px">Claim</Text>
         </Button>
@@ -79,7 +91,29 @@ const ProjectsFunded = () => {
     </motion.div>
     ))}
     </SimpleGrid>
-    </>
+
+
+    <Flex justify="center" alignItems="center" mt="32px">
+     <Button
+       bg="#B5FF45"
+       _hover={{  bg: "#D9D9D9" }}
+       _focus={{ bg: "#8AE400" }}
+       borderRadius="10px"
+       w="113px"
+       h="40px"
+       p="10px 16px"
+       onClick={handleViewMore}
+     >
+        <Text fontSize="16px" fontWeight="700" fontFamily="Gopher">View more</Text>
+      </Button>
+     </Flex>
+       
+       {/* ------------------- Claim Modal ------------------- */}
+      <Claim 
+       isOpen={isOpen}
+       onClose={onClose}
+      />
+    </Flex>
   )
 }
 

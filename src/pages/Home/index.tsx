@@ -1,21 +1,24 @@
-// import {useEffect} from 'react'
+import {useEffect} from 'react'
 import {Box, 
   Button, 
   Flex, 
   HStack, 
   Text,
-  SimpleGrid 
+  SimpleGrid,
+  useDisclosure
 } from '@chakra-ui/react'
 import Navbar from '../../components/Navbar'
 import ContainerWrapper from '../../components/ContainerWrapper'
 // import { animateScroll as scroll } from 'react-scroll';
-import { motion, useAnimation } from 'framer-motion';
+import { motion, useAnimation, useViewportScroll } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { missiondetails } from '../../utils/missions';
 import ProductListHome from '../../components/ProductListCard/ProductListHome'
-import ProjectsFunded from '../../components/ProjectsFunded';
+import ProjectsFunded from '../../components/ProjectsFundedCard/ProjectsFunded';
 import CustomAccordion from '../../components/CustomAccordion';
 import ContactForm from '../../components/ContactUsForm';
 import Footer from '../../components/Footer';
+import JoinDAO from '../../components/Modals/JoinDAO';
 
 const AnimatedButton = motion(Button);
 const AnimatedText = motion(Box);
@@ -24,51 +27,66 @@ const Home = () => {
 
     const {root, root2} = useHomeStyles();
     const controls = useAnimation();
+    const {isOpen, onClose, onOpen} = useDisclosure();
+    let navigate = useNavigate();
 
-    // const handleScroll = () => {
-    //   const scrollOffset = window.innerHeight * 0.7; // Adjust this value as needed
-    //   if (window.pageYOffset > scrollOffset) {
-    //     controls.start({ opacity: 1, y: 0 });
-    //   } else {
-    //     controls.start({ opacity: 0, y: 20 });
-    //   }
-    // };
 
-    // useEffect(() => {
-    //   window.addEventListener('scroll', handleScroll);
-    //   return () => window.removeEventListener('scroll', handleScroll);
-    // }, []);
-
-    // const { scrollYProgress } = useViewportScroll();
-
-    // useEffect(() => {
-    //   const element = document.getElementById('animated-heading');
-  
-    //   const updateOpacity = () => {
-    //     //@ts-ignore
-    //     const scrollPosition = scrollYProgress.current;
-    //     if (element) {
-    //       element.style.opacity = scrollPosition <= 0.2 ? '1' : '0';
-    //     }
-    //   };
-  
-    //   updateOpacity();
-  
-    //   const unsubscribe = scrollYProgress.onChange(updateOpacity);
-  
-    //   return () => {
-    //     unsubscribe();
-    //   };
-    // }, [scrollYProgress]);
-
+    useEffect(() => {
+      const handleScroll = () => {
+        const scrollOffset = window.innerHeight * 0.7; 
+        if (window.pageYOffset > scrollOffset) {
+          controls.start({ opacity: 1, y: 0 });
+        } else {
+          controls.start({ opacity: 0, y: 20 });
+        }
+      };
     
+      const handleScrollListener = () => {
+        handleScroll();
+      };
+    
+      window.addEventListener('scroll', handleScrollListener);
+    
+      return () => {
+        window.removeEventListener('scroll', handleScrollListener);
+      };
+    }, [controls]);
+
+    const { scrollYProgress } = useViewportScroll();
+
+    useEffect(() => {
+      const element = document.getElementById('animated-heading');
+  
+      const updateOpacity = () => {
+        //@ts-ignore
+        const scrollPosition = scrollYProgress.current;
+        if (element) {
+          element.style.opacity = scrollPosition <= 0.2 ? '1' : '0';
+        }
+      };
+  
+      updateOpacity();
+  
+      const unsubscribe = scrollYProgress.onChange(updateOpacity);
+  
+      return () => {
+        unsubscribe();
+      };
+    }, [scrollYProgress]);
+
+    const handleViewProposalpage = () => {
+      navigate('/makeaproposal');
+      // Scroll to top
+      window.scrollTo(0, 0); 
+    };
+
   return (
     <Box>
      {/* --------------------------------------NAVBAR------------------------------------- */}
       <Navbar />
      {/* --------------------------------------END-TAG-of-NAVBAR---------------------------  */}
        
-       {/* --------------------------------------HERO-SECTION--------------------------------*/}
+      {/* --------------------------------------HERO-SECTION--------------------------------*/}
        <Flex {...root}
          bgColor="#D9D9D9"
          bgRepeat="no-repeat"
@@ -137,18 +155,6 @@ const Home = () => {
            </motion.div>
             {/* ============================================================================== */}
 
-            {/* <Box height="2000px" /> 
-      <AnimatedText
-        opacity={0}
-        y={20}
-        initial={{ opacity: 0, y: 20 }}
-        animate={controls}
-        transition={{ duration: 0.5 }}
-      >
-        Scrolling Animation
-      </AnimatedText>
-    </Box> */}
-
            <HStack gap="6" pt="32px">
            <AnimatedButton
             bg="#B5FF45"
@@ -156,11 +162,14 @@ const Home = () => {
             w="102px"
             p="10px 16px"
             h="40px"
+            _hover={{  bg: "#D9D9D9" }}
+            _focus={{ bg: "#8AE400" }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
+            onClick={onOpen}
            >
            Join DAO
           </AnimatedButton>
@@ -174,6 +183,9 @@ const Home = () => {
                p="10px 16px"
                whileHover={{ y: -2 }}
                whileTap={{ scale: 0.95 }}
+               _focus={{ bg: "#8AE400", border: "0px" }}
+               _hover={{ bg: "transparent", border: "2px solid #B5FF45" }}
+               onClick={() => navigate("/makeaproposal")}
              >
               Make proposal
              </AnimatedButton>
@@ -277,7 +289,7 @@ const Home = () => {
          pb="100px"
        >
           <ContainerWrapper>
-          <Flex justify="center" alignItems="center" flexDir="column" textAlign="center" id="productlist">
+          <Flex justify="center" alignItems="center" flexDir="column" textAlign="center">
           
         <Box height="20px" /> 
        <AnimatedText
@@ -296,11 +308,11 @@ const Home = () => {
         </Text>
       </AnimatedText>
 
-       <motion.div
+         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.8 }}
-        >
+         >
            <Text 
             fontSize="18px" 
             fontWeight="500"
@@ -320,7 +332,7 @@ const Home = () => {
 
           </Flex>
           </ContainerWrapper>
-       </Flex>
+          </Flex>
        {/* ------------------------------END-TAG-OF-PRODUCT-LISTS-SECTION---------------------- */}
 
         {/* ----------------------------------PROJECTS-FUNDED-SECTION-------------------------- */}
@@ -379,7 +391,6 @@ const Home = () => {
        <Flex {...root2}
        pb="100px"
        bgColor="#171717"
-       id="makeproposal"
        >
         <ContainerWrapper>
         <Flex justify="center" alignItems="center" flexDir="column" textAlign="center">
@@ -424,7 +435,9 @@ const Home = () => {
         mt="32px"
         borderRadius="10px"
         bg="#B5FF45"
-        _hover={{ bg:"#B5FF45" }}
+        _hover={{  bg: "#D9D9D9" }}
+        _focus={{ bg: "#8AE400" }}
+        onClick={handleViewProposalpage}
         >
             <Text color="#171717" fontWeight="700" fontSize="16px">Make a Proposal</Text>
         </Button>
@@ -523,6 +536,13 @@ const Home = () => {
        </Flex>
 
        <Footer />
+
+       {/* ------------------- JOINDAO MODAL ------------------------- */}
+       <JoinDAO 
+        isOpen={isOpen}
+        onClose={onClose}
+       />
+
     </Box>
   )
 }

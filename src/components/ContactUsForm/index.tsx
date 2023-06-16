@@ -108,7 +108,8 @@ const ContactForm = () => {
             type="submit"
             bg="#B5FF45"
             borderRadius="10px"
-            _hover={{  bg: "#B5FF45" }}
+            _hover={{  bg: "#D9D9D9" }}
+            _focus={{ bg: "#8AE400" }}
             isLoading={isSubmitting}
             loadingText="Submitting"
           >

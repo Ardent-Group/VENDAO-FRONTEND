@@ -6,11 +6,15 @@ import {
   Text,
 } from "@chakra-ui/react"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
+import Home from "./pages/Home"
+import MakeProposal from "./pages/MakeProposal";
+import ProductList from "./pages/ProductList";
+import ProjectListDetail from "./pages/ProductlistDetail";
 import {theme} from './constants/theme'
 import Mobile from './assets/json/mobile.json'
 import { useWindowSize } from "rooks";
 import Lottie from "lottie-react";
+import Projects from "./pages/Projects";
 // import { ColorModeSwitcher } from "./ColorModeSwitcher"
 //<ColorModeSwitcher justifySelf="flex-end" />
 
@@ -37,7 +41,10 @@ export const App = () => {
       <Router>
         <Routes>
          <Route index path="/" element={<Home />} />
-          {/* <Route path="/swap" element={<Swap />} /> */}
+          <Route path="/makeaproposal" element={<MakeProposal />} />
+          <Route path="/productlist" element={<ProductList />} />
+          <Route path="/product/:id" element={<ProjectListDetail />} />
+          <Route path="/projects" element={<Projects />} />
         </Routes>
        </Router>
   </ChakraProvider>
