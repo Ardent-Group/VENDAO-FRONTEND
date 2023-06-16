@@ -22,19 +22,19 @@ const CustomAccordion = () => {
     const items = [
         {
             title: 'What criteria does the DAO consider when evaluating project proposals for funding?',
-            content: "dropping soon"
+            content: "The DAO evaluates project proposals based on factors like novelty, impact, team expertise, and alignment with our investment thesis."
         },
         {
             title: 'How long does the funding process typically take?',
-            content: "dropping soon"
+            content: "The funding process duration can vary but typically takes around 4-6 weeks from the submission of a complete project proposal to the final funding decision."
         },
         {
             title: 'How can I track the progress and updates of the funded projects?',
-            content: "dropping soon"
+            content: "Project updates and progress are shared through our online community platforms and regular reporting mechanisms to keep the DAO members informed."
         },
         {
             title: 'How does the DAO handle investment returns and profit-sharing with project teams?',
-            content: "dropping soon"
+            content: "Returns and profit-sharing arrangements are detailed in custom funding agreements with each project team."
         }
     ];
   
@@ -81,6 +81,8 @@ const CustomAccordion = () => {
               </AccordionButton>
             </h2>
             <AccordionPanel pb={15} hidden={expandedIndex !== index}
+            maxW="800px"
+            textAlign="left"
             >
               {item.content}
             </AccordionPanel>

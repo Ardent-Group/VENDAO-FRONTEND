@@ -20,23 +20,23 @@ const Navbar = () => {
       },
       {
         name: "Product list",
-        link: "#productlist"
+        link: "/productlist"
       },
       {
         name: "Projects",
-        link: "#projects"
+        link: "/projects"
       },
       {
         name: "Make proposal",
-        link: "#makeproposal"
+        link: "/makeaproposal"
       },
       {
         name: "FAQ",
-        link: "#faq"
+        link: "#"
       },
       {
         name: "Contact us",
-        link: "#contactUs"
+        link: "#"
       }
      
     ]
@@ -80,12 +80,13 @@ const Navbar = () => {
             <HStack>
             {tabs.map((e) => (
               <Link to={e.link} key={nanoid()}>
-                   <HStack
-                  px="10px"
-                  py="5px"
-                  borderRadius={"50px"}
+              <HStack
+                px="10px"
+                py="5px"
+                borderRadius={"50px"}
                 >
                   <Text fontSize="16px" fontWeight={500}
+                   _hover={{ color: "#696969" }}
                    >
                     {e.name}
                   </Text>

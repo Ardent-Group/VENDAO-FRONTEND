@@ -1,19 +1,21 @@
-import React from 'react'
+import {useState} from 'react'
 import {
     Button, 
     Flex, 
     Image,
     Text,
     SimpleGrid, 
-    Divider
+    Divider,
+    HStack
   } from '@chakra-ui/react'
 import { VENDAO_SVG } from '../../../assets/svg'
-import { productsDetail } from '../../../utils/products'
+import { productsDetail2 } from '../../../utils/products'
 import { useNavigate } from 'react-router-dom'
 
-const ProductListHome = () => {
+const ProductListSingle = () => {
 
-  let navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const productsPerPage = 9;
 
   const getStatusColor = (status: any) => {
     switch (status) {
@@ -54,10 +56,38 @@ const ProductListHome = () => {
     }
   };
 
-  const handleViewMore = () => {
-    navigate('/productlist');
-    window.scrollTo(0, 0); // Scroll to top
+  
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    // Scroll back to top
+    window.scrollTo(0, 0); 
   };
+
+  const startIndex = (currentPage - 1) * productsPerPage;
+  const visibleProducts = productsDetail2.slice(
+    startIndex,
+    startIndex + productsPerPage
+  );
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+       // Scroll back to top
+      window.scrollTo(0, 0); 
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+       // Scroll back to top
+      window.scrollTo(0, 0); 
+    }
+  };
+
+  const totalPages = Math.ceil(productsDetail2.length / productsPerPage);
+
+  let navigate = useNavigate();
 
   const handleClickView = (id: number) => {
     navigate(`/product/${id}`);
@@ -66,9 +96,9 @@ const ProductListHome = () => {
   };
   
   return (
-    <Flex flexDir="column">
+    <Flex flexDir="column" mt="20px">
     <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing={5}>
-    {productsDetail.map((e: any) => (
+    {visibleProducts.map((e: any) => (
       <Flex
         border="0.5px solid #CFCFCF"
         background=""
@@ -78,6 +108,7 @@ const ProductListHome = () => {
         w="100%"
         h="100%"
         flexDir="column"
+        key={e.id}
        >
         {/* --------- status button ---------- */}
           <Button
@@ -157,22 +188,58 @@ const ProductListHome = () => {
        ))}
      </SimpleGrid>
 
-     <Flex justify="center" alignItems="center" mt="32px">
-     <Button
-       bg="#B5FF45"
-       _hover={{  bg: "#D9D9D9" }}
-       _focus={{ bg: "#8AE400" }}
-       borderRadius="10px"
-       w="113px"
-       h="40px"
-       p="10px 16px"
-       onClick={handleViewMore}
-     >
-        <Text fontSize="16px" fontWeight="700" fontFamily="Gopher">View more</Text>
-    </Button>
-     </Flex>
+       {/* --------------------- Pagination ---------------------- */}
+      <Flex justify="center" alignItems="center" mt="80px">
+        <HStack alignItems="center">
+          <Button
+            bg="transparent"
+            _hover={{ bg: '#D9D9D9', color: 'white' }}
+            borderRadius="10px"
+            w="50px"
+            h="50px"
+            p="10px 16px"
+            onClick={handlePrevPage}
+            disabled={currentPage === 1}
+          >
+            <HStack>{VENDAO_SVG().arrowLeft()}</HStack>
+          </Button>
+
+          {[...Array(totalPages)].map((_, index) => (
+            <Button
+              key={index + 1}
+              bg="transparent"
+              _hover={{ bg: '#171717', color: 'white' }}
+              _focus={{ bg: '#171717', color: 'white' }}
+              borderRadius="10px"
+              w="50px"
+              h="50px"
+              p="10px 16px"
+              onClick={() => handlePageChange(index + 1)}
+              isActive={currentPage === index + 1}
+            >
+              <Text fontSize="16px" fontWeight="700" fontFamily="Gopher">
+                {index + 1}
+              </Text>
+            </Button>
+          ))}
+
+          <Button
+            bg="transparent"
+            _hover={{ bg: '#D9D9D9', color: 'white' }}
+            borderRadius="10px"
+            w="50px"
+            h="50px"
+            p="10px 16px"
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+          >
+            <HStack>{VENDAO_SVG().arrowRight2()}</HStack>
+          </Button>
+        </HStack>
+      </Flex>
+
     </Flex>
   )
 }
 
-export default ProductListHome
+export default ProductListSingle
