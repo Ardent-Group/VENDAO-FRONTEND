@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import {
-    Box,
-    HStack,
-    Text,
-    VStack,
-    Flex,
-    Stack
-  } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
-import { nanoid } from '@reduxjs/toolkit';
-import { VENDAO_SVG } from '../../../../assets/svg';
+// import {
+//     Box,
+//     HStack,
+//     Text,
+//     VStack,
+//     Flex,
+//     Stack
+//   } from '@chakra-ui/react';
+// import { motion } from 'framer-motion';
+// import { nanoid } from '@reduxjs/toolkit';
+// import { VENDAO_SVG } from '../../../assets/svg';
 import { useNavigate } from 'react-router-dom';
 
 

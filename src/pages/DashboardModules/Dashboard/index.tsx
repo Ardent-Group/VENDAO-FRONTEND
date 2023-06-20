@@ -1,7 +1,7 @@
 import { Flex, Stack, Text, IconButton, Spinner, HStack, Button } from "@chakra-ui/react";
 import {useState, Suspense, lazy} from 'react'
 import { nanoid } from "@reduxjs/toolkit";
-import { VENDAO_SVG } from "../../../../assets/svg";
+import { VENDAO_SVG } from "../../../assets/svg";
 import DashboardHome from "./main";
 const InvestedProject = lazy(() => import("../Investproject/index"));
 const ProductListDetail = lazy(() => import("../Investproject/ProductDetail/index"));
