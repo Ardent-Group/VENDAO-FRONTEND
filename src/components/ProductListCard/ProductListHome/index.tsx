@@ -71,6 +71,7 @@ const ProductListHome = () => {
     {productsDetail.map((e: any) => (
       <Flex
         border="0.5px solid #CFCFCF"
+        _hover={{ border: "1.3px solid #84DB00" }}
         background=""
         borderRadius="20px"
         p="20px 40px"
@@ -94,7 +95,7 @@ const ProductListHome = () => {
           </Button>
 
           <Flex
-          mt="20px"
+          mt="10px"
           justify="space-between"
           alignItems="center"
           >
@@ -102,11 +103,12 @@ const ProductListHome = () => {
              <Image src={e.productLogo} alt=""  />
           </Flex>
 
-            <Text fontFamily="Gopher"
+            <Text 
+            fontFamily="Gopher"
             fontSize="16px"  
             fontWeight="700"
-            lineHeight="20px" mt="40px"
-            maxW="600px"
+            lineHeight="20px" mt="20px"
+            // maxW="600px"
             textAlign="start"
             >
               {e.description}
@@ -114,18 +116,18 @@ const ProductListHome = () => {
 
             <Divider border="0.5px solid #404040" mt="15px" />
 
-            <Flex
+           <Flex
             mt="20px"
             alignItems="center"
             justifyContent="space-between"
             >
-                <Flex flexDir="column"
-                >
+                <Flex flexDir="column">
                    <Text
                     fontFamily="Gopher" 
                     fontSize="16px"  
                     fontWeight="500"
                     lineHeight="20px" 
+                    textAlign="start"
                    >
                     Equity offered
                    </Text>
@@ -144,7 +146,7 @@ const ProductListHome = () => {
                 <Button
                  borderRadius="10px"
                  bg="#B5FF45"
-                 _hover={{bg: "#B5FF45" }}
+                 _hover={{bg: "#8AE400" }}
                  w="56px"
                  h="50px"
                  onClick={() => handleClickView(e.id)}

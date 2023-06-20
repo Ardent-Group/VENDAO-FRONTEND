@@ -75,7 +75,7 @@ const JoinDAO = ({isOpen, onClose}: any) => {
                   </RadioGroup> */}
 
                   <Text color="16px" fontWeight="600">
-                   You’d be required to deposit an equivalent of $15,000 in FTM to join the DAO
+                   You’d be required to deposit 30,000 FTM to join the DAO.
                    </Text>
                  </Flex>
                 

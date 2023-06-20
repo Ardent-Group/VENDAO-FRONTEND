@@ -1,32 +1,40 @@
 import Images_Icons from "../constants/icons-images";
 
-export const productsDetail = [
+export interface ProductDetail {
+  id: string;
+  name: string;
+  productLogo: string;
+  status: string;
+  equityOffered: string;
+  description: string;
+}
+
+export const productsDetail: ProductDetail[] = [
     {
-      id: 1,
+      id: "1",
       name: "NFT Nexus",
       productLogo: Images_Icons.productLogo1,
       description: "NFT Nexus is a cutting-edge web3 platform that revolutionizes the way digital assets are created, traded, and collected.",
-      equityOffered: "20%",
+      equityOffered: "200,000",
       status: "approved",
     },
     {
-      id: 2,
+      id: "2",
       name: "Ether Elevate",
       productLogo: Images_Icons.productLogo2,
       description: "EtherElevate is designed to empower individuals and businesses to elevate their Ethereum-based projects to new heights.",
-      equityOffered: "10%",
+      equityOffered: "150,000",
       status: "rejected",
     },
     {
-      id: 3,
+      id: "3",
       name: "DeFi Dynamo",
       productLogo: Images_Icons.productLogo3,
       description: "DeFi Dynamo is a dynamic web3 project that unlocks the full potential of decentralized finance (DeFi). Through smart contracts.",
-      equityOffered: "5.5%",
+      equityOffered: "500,000",
       status: "pending",
     },
 ];
-
 
 export const projectsfundeddetail = [
   {
@@ -79,14 +87,13 @@ export const projectsfundeddetail = [
   }
 ];
 
-
 export const productsDetail2 = [
   {
     id: 1,
     name: "NFT Nexus",
     productLogo: Images_Icons.productLogo1,
     description: "NFT Nexus is a cutting-edge web3 platform that revolutionizes the way digital assets are created, traded, and collected.",
-    equityOffered: "20%",
+    equityOffered: "200,000",
     status: "approved",
   },
   {
@@ -94,7 +101,7 @@ export const productsDetail2 = [
     name: "Ether Elevate",
     productLogo: Images_Icons.productLogo2,
     description: "EtherElevate is designed to empower individuals and businesses to elevate their Ethereum-based projects to new heights.",
-    equityOffered: "10%",
+    equityOffered: "150,000",
     status: "rejected",
   },
   {
@@ -102,7 +109,7 @@ export const productsDetail2 = [
     name: "DeFi Dynamo",
     productLogo: Images_Icons.productLogo3,
     description: "DeFi Dynamo is a dynamic web3 project that unlocks the full potential of decentralized finance (DeFi). Through smart contracts.",
-    equityOffered: "5.5%",
+    equityOffered: "500,000",
     status: "pending",
   },
   {
@@ -110,7 +117,7 @@ export const productsDetail2 = [
     name: "NFT Nexus",
     productLogo: Images_Icons.productLogo1,
     description: "NFT Nexus is a cutting-edge web3 platform that revolutionizes the way digital assets are created, traded, and collected.",
-    equityOffered: "20%",
+    equityOffered: "200,000",
     status: "approved",
   },
   {
@@ -118,7 +125,7 @@ export const productsDetail2 = [
     name: "Ether Elevate",
     productLogo: Images_Icons.productLogo2,
     description: "EtherElevate is designed to empower individuals and businesses to elevate their Ethereum-based projects to new heights.",
-    equityOffered: "10%",
+    equityOffered: "150,000",
     status: "rejected",
   },
   {
@@ -126,7 +133,7 @@ export const productsDetail2 = [
     name: "DeFi Dynamo",
     productLogo: Images_Icons.productLogo3,
     description: "DeFi Dynamo is a dynamic web3 project that unlocks the full potential of decentralized finance (DeFi). Through smart contracts.",
-    equityOffered: "5.5%",
+    equityOffered: "500,000",
     status: "pending",
   },
   {
@@ -134,7 +141,7 @@ export const productsDetail2 = [
     name: "NFT Nexus",
     productLogo: Images_Icons.productLogo1,
     description: "NFT Nexus is a cutting-edge web3 platform that revolutionizes the way digital assets are created, traded, and collected.",
-    equityOffered: "20%",
+    equityOffered: "200,000",
     status: "approved",
   },
   {
@@ -142,7 +149,7 @@ export const productsDetail2 = [
     name: "Ether Elevate",
     productLogo: Images_Icons.productLogo2,
     description: "EtherElevate is designed to empower individuals and businesses to elevate their Ethereum-based projects to new heights.",
-    equityOffered: "10%",
+    equityOffered: "150,000",
     status: "rejected",
   },
   {
@@ -150,7 +157,7 @@ export const productsDetail2 = [
     name: "DeFi Dynamo",
     productLogo: Images_Icons.productLogo3,
     description: "DeFi Dynamo is a dynamic web3 project that unlocks the full potential of decentralized finance (DeFi). Through smart contracts.",
-    equityOffered: "5.5%",
+    equityOffered: "500,000",
     status: "pending",
   },
     {
@@ -158,7 +165,7 @@ export const productsDetail2 = [
     name: "NFT Nexus",
     productLogo: Images_Icons.productLogo1,
     description: "NFT Nexus is a cutting-edge web3 platform that revolutionizes the way digital assets are created, traded, and collected.",
-    equityOffered: "20%",
+    equityOffered: "200,000",
     status: "approved",
   },
   {
@@ -166,7 +173,7 @@ export const productsDetail2 = [
     name: "Ether Elevate",
     productLogo: Images_Icons.productLogo2,
     description: "EtherElevate is designed to empower individuals and businesses to elevate their Ethereum-based projects to new heights.",
-    equityOffered: "10%",
+    equityOffered: "150,000",
     status: "rejected",
   },
   {
@@ -174,7 +181,7 @@ export const productsDetail2 = [
     name: "DeFi Dynamo",
     productLogo: Images_Icons.productLogo3,
     description: "DeFi Dynamo is a dynamic web3 project that unlocks the full potential of decentralized finance (DeFi). Through smart contracts.",
-    equityOffered: "5.5%",
+    equityOffered: "500,000",
     status: "pending",
   },
 ];

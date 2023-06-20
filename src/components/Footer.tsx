@@ -126,7 +126,7 @@ const Footer = () => {
 
               <Flex flexDir="column">
                 <Text color="white" cursor="pointer" fontWeight="700" fontSize="20px">Connect</Text>
-                <Text color="white" cursor="pointer" fontWeight="500" fontSize="16px" mt="20px">DAOVentures@gmail.com</Text>
+                <Text color="white" cursor="pointer" fontWeight="500" fontSize="16px" mt="20px">Vendao@gmail.com</Text>
                 <Text color="white" cursor="pointer" fontWeight="500" fontSize="16px" mt="20px">Linkedln</Text>
                 <Text color="white" cursor="pointer" fontWeight="500" fontSize="16px" mt="20px">Twitter</Text>
               </Flex>
