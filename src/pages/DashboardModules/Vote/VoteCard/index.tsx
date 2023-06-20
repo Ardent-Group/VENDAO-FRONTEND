@@ -6,7 +6,7 @@ import {
     SimpleGrid, 
     HStack
   } from '@chakra-ui/react'
-  import { VENDAO_SVG } from '../../../../../assets/svg';
+ import { VENDAO_SVG } from '../../../../assets/svg';
 
 const VoteCard = () => {
 

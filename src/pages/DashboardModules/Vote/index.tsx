@@ -6,7 +6,7 @@ import {
     HStack,
     Button,
   } from '@chakra-ui/react';
-import PopoverWithMouseover from '../../../../components/PopoverContent';
+import PopoverWithMouseover from '../../../components/PopoverContent';
 import VoteCard from './VoteCard';
 
 const Vote = () => {

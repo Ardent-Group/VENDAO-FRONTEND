@@ -10,7 +10,7 @@ import Home from "./pages/Home"
 import MakeProposal from "./pages/MakeProposal";
 import ProductList from "./pages/ProductList";
 import ProjectListDetail from "./pages/ProductlistDetail";
-import DashboardPanel from "./pages/Home/DashboardModules/Dashboard";
+import DashboardPanel from "./pages/DashboardModules/Dashboard";
 import {theme} from './constants/theme'
 import Mobile from './assets/json/mobile.json'
 import { useWindowSize } from "rooks";

@@ -9,7 +9,7 @@ import {
   } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { nanoid } from '@reduxjs/toolkit';
-import { VENDAO_SVG } from '../../../../assets/svg';
+import { VENDAO_SVG } from '../../../assets/svg';
 import { useNavigate } from 'react-router-dom';
 
 

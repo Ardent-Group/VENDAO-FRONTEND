@@ -8,8 +8,8 @@ import {
     Divider,
     HStack
   } from '@chakra-ui/react'
-import { VENDAO_SVG } from '../../../../assets/svg'
-import { productsDetail2 } from '../../../../utils/products'
+import { VENDAO_SVG } from '../../../assets/svg'
+import { productsDetail2 } from '../../../utils/products'
 
 const ProductListSingle = ({setSelectedIndex}: any) => {
 

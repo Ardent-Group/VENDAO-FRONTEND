@@ -6,8 +6,8 @@ import {Box,
     Text,
     Image
   } from '@chakra-ui/react'
-import { ProductDetail, productsDetail } from '../../../../../utils/products'
-import { VENDAO_SVG } from '../../../../../assets/svg';
+import { ProductDetail, productsDetail } from '../../../../utils/products';
+import { VENDAO_SVG } from '../../../../assets/svg';
 
 const ProductListDetail = ({setSelectedIndex}: any) => {
 
