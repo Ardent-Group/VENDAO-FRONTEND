@@ -1,7 +1,8 @@
 
 interface SVGProps {
-    fillColor?: string | null;
+    fillColor?: any;
     props?: any;
+    color?: any;
 }
 
 export function VENDAO_SVG() { 
@@ -174,6 +175,169 @@ export function VENDAO_SVG() {
                 strokeWidth={2}
                 strokeLinecap="round"
                 strokeLinejoin="round"
+              />
+            </svg>
+          )
+        },
+        dashboardArrowRight: (props?: SVGProps) => {
+          return (
+            <svg
+              width={19}
+              height={24}
+              viewBox="0 0 19 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              {...props}
+            >
+              <path
+                d="M5 21h14a2 2 0 002-2V5a2 2 0 00-2-2H5c-1.11 0-2 .89-2 2v14a2 2 0 002 2zm9.29-15l1.42 1.41L11.12 12l4.59 4.59L14.29 18l-6-6 6-6z"
+                fill="#fff"
+              />
+            </svg>
+          )
+        },
+        dashboardRouteIcon1: (props?: SVGProps) => {
+          return (
+            <svg
+              width={17}
+              height={17}
+              viewBox="0 0 17 17"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              {...props}
+            >
+              <path
+                d="M9 0h8v6H9V0zm0 17V7h8v10H9zm-9 0v-6h8v6H0zm0-7V0h8v10H0zm1-9v8h6V1H1zm9 0v4h6V1h-6zm0 7v8h6V8h-6zm-9 4v4h6v-4H1z"
+                fill="currentColor"
+              />
+            </svg>
+          )
+        },
+        dashboardRouteIcon2: (props?: SVGProps) => { 
+          return (
+            <svg
+              width={24}
+              height={24}
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              {...props}
+            >
+              <path
+                d="M16 6c0-1.886 0-2.828-.586-3.414C14.828 2 13.886 2 12 2c-1.886 0-2.828 0-3.414.586C8 3.172 8 4.114 8 6m-6 8c0-3.771 0-5.657 1.172-6.828C4.343 6 6.229 6 10 6h4c3.771 0 5.657 0 6.828 1.172C22 8.343 22 10.229 22 14c0 3.771 0 5.657-1.172 6.828C19.657 22 17.771 22 14 22h-4c-3.771 0-5.657 0-6.828-1.172C2 19.657 2 17.771 2 14z"
+                stroke="currentColor"
+                strokeWidth={1.5}
+              />
+              <path
+                d="M12 17.333c1.105 0 2-.746 2-1.666 0-.92-.895-1.667-2-1.667s-2-.746-2-1.667c0-.92.895-1.666 2-1.666m0 6.666c-1.105 0-2-.746-2-1.666m2 1.666V18m0-7.333V10m0 .667c1.105 0 2 .746 2 1.666"
+                 //@ts-ignore
+                stroke="currentColor"
+                strokeWidth={1.5}
+                strokeLinecap="round"
+              />
+            </svg>
+          )
+        },
+        dashboardRouteIcon3: (props?: SVGProps) => {
+          return (
+            <svg
+              width={24}
+              height={24}
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              {...props}
+            >
+              <path
+                d="M20.25 3.938H3.75A1.313 1.313 0 002.437 5.25V18a1.313 1.313 0 001.313 1.313h1.688V21a.562.562 0 101.125 0v-1.688h10.875V21a.562.562 0 101.125 0v-1.688h1.687A1.313 1.313 0 0021.563 18V5.25a1.313 1.313 0 00-1.313-1.313zm0 14.25H3.75A.188.188 0 013.562 18V5.25a.187.187 0 01.188-.188h16.5a.188.188 0 01.188.188v6.188h-1.913a4.312 4.312 0 100 1.124h1.913V18a.188.188 0 01-.188.188zm-4.816-6.75a1.313 1.313 0 100 1.124h1.953a3.188 3.188 0 110-1.124h-1.953z"
+                fill="currentColor"
+              />
+            </svg>
+          )
+        },
+        dashboardRouteIcon4: (props?: SVGProps) => {
+          return (
+            <svg
+              width={20}
+              height={18}
+              viewBox="0 0 20 18"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              {...props}
+            >
+              <path
+                d="M12.679 7.8H14.2a.6.6 0 010 1.2H5.8a.6.6 0 110-1.2h.909a1.2 1.2 0 01-.148-1.404l3-5.196a1.2 1.2 0 011.64-.44l3.117 1.8a1.2 1.2 0 01.44 1.64l-2.08 3.6zm1.039-4.2L10.6 1.8l-3 5.196 1.392.804h2.302l2.424-4.2zm1.034 3l.693-1.2a1.2 1.2 0 01.915.48l3 4c.156.207.24.46.24.72v5.6a1.2 1.2 0 01-1.2 1.2H1.6a1.2 1.2 0 01-1.2-1.2v-5.6c0-.26.085-.513.24-.72l3-4a1.2 1.2 0 01.96-.48h1.156l-.575.996a1.208 1.208 0 00-.093.204H4.6l-2.7 3.6h16.2l-2.7-3.6h-.648zM1.6 16.2h16.8v-4.8H1.6v4.8z"
+               fill="currentColor"
+              />
+            </svg>
+          )
+        },
+        twitterIcon: (props?: SVGProps) => {
+          return (
+            <svg
+              width={20}
+              height={18}
+              viewBox="0 0 20 18"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              {...props}
+            >
+              <path
+                d="M20 2.8a8.49 8.49 0 01-2.36.64 4.13 4.13 0 001.81-2.27 8.21 8.21 0 01-2.61 1 4.1 4.1 0 00-7 3.74 11.64 11.64 0 01-8.45-4.29 4.16 4.16 0 00-.55 2.07A4.09 4.09 0 002.66 7.1 4.05 4.05 0 01.8 6.59v.05a4.1 4.1 0 003.3 4 3.933 3.933 0 01-1.1.17 4.907 4.907 0 01-.77-.07 4.11 4.11 0 003.83 2.84A8.22 8.22 0 010 15.28a11.57 11.57 0 006.29 1.85A11.589 11.589 0 0018 5.45v-.53a8.43 8.43 0 002-2.12z"
+                fill="#fff"
+              />
+            </svg>
+          )
+        },
+        linkedinIcon: (props?: SVGProps) => {
+          return (
+            <svg
+              width={24}
+              height={24}
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              {...props}
+            >
+              <path
+                d="M4.983 7.197a2.188 2.188 0 100-4.376 2.188 2.188 0 000 4.376zM9.237 8.855v12.139h3.769V14.99c0-1.584.298-3.118 2.262-3.118 1.937 0 1.96 1.81 1.96 3.218v5.904H21v-6.657c0-3.27-.704-5.783-4.526-5.783-1.835 0-3.065 1.007-3.568 1.96h-.051v-1.66H9.237zm-6.142 0H6.87v12.139H3.095V8.854z"
+                fill="#fff"
+              />
+            </svg>
+          )
+        },
+        facebookIcon: (props?: SVGProps) => {
+          return (
+            <svg
+              width={24}
+              height={24}
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              {...props}
+            >
+              <path
+                d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.326-.043-1.557-.14-2.857-.14C11.928 2 10 3.657 10 6.7v2.8H7v4h3V22h4v-8.5z"
+                fill="#fff"
+              />
+            </svg>
+          )
+        },
+        arrowBackDashboard: (props?: SVGProps) => {
+          return (
+            <svg
+              width={32}
+              height={32}
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              {...props}
+            >
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M30 16a1 1 0 00-1-1H5.414l6.294-6.292a1 1 0 10-1.416-1.416l-8 8a1 1 0 000 1.416l8 8a1.001 1.001 0 101.416-1.416L5.414 17H29a1 1 0 001-1z"
+                fill="#000"
               />
             </svg>
           )

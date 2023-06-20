@@ -8,53 +8,13 @@ import {
     Divider,
     HStack
   } from '@chakra-ui/react'
-import { VENDAO_SVG } from '../../../assets/svg'
-import { productsDetail2 } from '../../../utils/products'
-import { useNavigate } from 'react-router-dom'
+import { VENDAO_SVG } from '../../../../assets/svg'
+import { productsDetail2 } from '../../../../utils/products'
 
-const ProductListSingle = () => {
+const ProductListSingle = ({setSelectedIndex}: any) => {
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const productsPerPage = 9;
-
-  const getStatusColor = (status: any) => {
-    switch (status) {
-      case "approved":
-        return "#D9FFD6";
-      case "rejected":
-        return "#FFD6D6";
-      case "pending":
-        return "#FEFFD6";
-      default:
-        return "gray";
-    }
-  };
-
-  const getStatusColorText = (status: any) => {
-    switch (status) {
-      case "approved":
-        return "#4CDC3F";
-      case "rejected":
-        return "#F42C2C";
-      case "pending":
-        return "#D1D600";
-      default:
-        return "black";
-    }
-  };
-  
-  const getStatusLabel = (status: any) => {
-    switch (status) {
-      case "approved":
-        return "Approved";
-      case "rejected":
-        return "Rejected";
-      case "pending":
-        return "Pending";
-      default:
-        return "Unknown";
-    }
-  };
 
   
   const handlePageChange = (page: number) => {
@@ -87,10 +47,8 @@ const ProductListSingle = () => {
 
   const totalPages = Math.ceil(productsDetail2.length / productsPerPage);
 
-  let navigate = useNavigate();
-
-  const handleClickView = (id: number) => {
-    navigate(`/product/${id}`);
+  const handleClickView = () => {
+    setSelectedIndex(1);
     // Scroll back to top
     window.scrollTo(0, 0);
   };
@@ -106,40 +64,25 @@ const ProductListSingle = () => {
         borderRadius="20px"
         p="20px"
         backgroundColor="white"
-        w="100%"
+        w="289px"
         h="100%"
         flexDir="column"
         key={e.id}
-       >
-        {/* --------- status button ---------- */}
-          <Button
-           bg={getStatusColor(e.status)}
-           _hover={{ bg: getStatusColor(e.status) }}
-           borderRadius="10px"
-           color={getStatusColorText(e.status)}
-           w="96px"
-           h="40px"
-          >
-           <Text fontSize="16px" fontWeight="500" fontFamily="Gopher">
-           {getStatusLabel(e.status)}
-           </Text>
-          </Button>
-
+       >    
           <Flex
-          mt="20px"
           justify="space-between"
           alignItems="center"
           >
-            <Text fontFamily="Gopher" fontSize="20px" fontWeight="700">{e.name}</Text>
+            <Text fontFamily="Gopher" fontSize="18px" fontWeight="700">{e.name}</Text>
              <Image src={e.productLogo} alt=""  />
           </Flex>
 
             <Text fontFamily="Gopher"
             fontSize="16px"  
-            fontWeight="700"
+            fontWeight="600"
             lineHeight="20px" 
-            mt="20px"
-            maxW="600px"
+            mt="10px"
+            // maxW="800px"
             textAlign="start"
             >
               {e.description}
@@ -165,7 +108,7 @@ const ProductListSingle = () => {
 
                    <Text
                      fontFamily="Gopher2" 
-                     fontSize="48px"  
+                     fontSize="20px"  
                      fontWeight="700"
                      lineHeight="60px" 
                      mt="4px"
@@ -180,7 +123,7 @@ const ProductListSingle = () => {
                  _hover={{bg: "#8AE400" }}
                  w="56px"
                  h="50px"
-                 onClick={() => handleClickView(e.id)}
+                 onClick={() => handleClickView()}
                 >
                   {VENDAO_SVG().arrowRight()}
                 </Button>
@@ -191,7 +134,7 @@ const ProductListSingle = () => {
      </SimpleGrid>
 
        {/* --------------------- Pagination ---------------------- */}
-      <Flex justify="center" alignItems="center" mt="60px">
+      <Flex justify="center" alignItems="center" mt="40px" mb="20px">
         <HStack alignItems="center">
           <Button
             bg="transparent"
