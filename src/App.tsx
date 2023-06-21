@@ -16,9 +16,6 @@ import Mobile from './assets/json/mobile.json'
 import { useWindowSize } from "rooks";
 import Lottie from "lottie-react";
 import Projects from "./pages/Projects";
-// import { ColorModeSwitcher } from "./ColorModeSwitcher"
-//<ColorModeSwitcher justifySelf="flex-end" />
-
 
 export const App = () => {
 

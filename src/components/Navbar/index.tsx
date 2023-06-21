@@ -3,13 +3,13 @@ import {
     Box, 
     Text,
     HStack,
-    Button,
     Slide
  } from '@chakra-ui/react'
 import ContainerWrapper from '../ContainerWrapper'
 import {Link} from 'react-router-dom'
 import { VENDAO_SVG } from '../../assets/svg'
 import { nanoid } from "@reduxjs/toolkit";
+import { CustomButton } from '../../hooks/customButton'
 
 const Navbar = () => {
 
@@ -96,7 +96,7 @@ const Navbar = () => {
             </HStack>
 
             <HStack>
-                <Button
+                {/* <Button
                 bg="transparent"
                 p="10px 16px"
                 h="40px"
@@ -104,7 +104,8 @@ const Navbar = () => {
                 _hover={{ bg: "transparent" }}
                 >
                     Connect Wallet
-                </Button>
+                </Button> */}
+                <CustomButton headerUsed={true} />
             </HStack>
           </HStack>
         </ContainerWrapper>

@@ -19,6 +19,8 @@ import CustomAccordion from '../../components/CustomAccordion';
 import ContactForm from '../../components/ContactUsForm';
 import Footer from '../../components/Footer';
 import JoinDAO from '../../components/Modals/JoinDAO';
+import { useAccount } from 'wagmi';
+import { CustomButton } from '../../hooks/customButton';
 
 const AnimatedButton = motion(Button);
 const AnimatedText = motion(Box);
@@ -29,6 +31,7 @@ const Home = () => {
     const controls = useAnimation();
     const {isOpen, onClose, onOpen} = useDisclosure();
     let navigate = useNavigate();
+    const { address } = useAccount();
 
 
     useEffect(() => {
@@ -154,42 +157,45 @@ const Home = () => {
            </Text>
            </motion.div>
             {/* ============================================================================== */}
+            {
+              address ?
+              <HStack gap="6" pt="32px">
+              <AnimatedButton
+                bg="#B5FF45"
+                borderRadius="10px"
+                w="102px"
+                p="10px 16px"
+                h="40px"
+                _hover={{  bg: "#D9D9D9" }}
+                _focus={{ bg: "#8AE400" }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                onClick={onOpen}
+              >
+              Join DAO
+              </AnimatedButton>
+               <AnimatedButton
+                 borderRadius="10px"
+                 border="2px solid #B5FF45"
+                 bg="transparent"
+                 w="146px"
+                 h="40px"
+                 p="10px 16px"
+                 whileHover={{ y: -2 }}
+                 whileTap={{ scale: 0.95 }}
+                 _focus={{ bg: "#8AE400", border: "0px" }}
+                 _hover={{ bg: "transparent", border: "2px solid #B5FF45" }}
+                 onClick={() => navigate("/makeaproposal")}
+               >
+                Make proposal
+               </AnimatedButton>
+             </HStack> :
+             <CustomButton headerUsed={false} />
+            }
 
-           <HStack gap="6" pt="32px">
-           <AnimatedButton
-            bg="#B5FF45"
-            borderRadius="10px"
-            w="102px"
-            p="10px 16px"
-            h="40px"
-            _hover={{  bg: "#D9D9D9" }}
-            _focus={{ bg: "#8AE400" }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            onClick={onOpen}
-           >
-           Join DAO
-          </AnimatedButton>
-
-             <AnimatedButton
-               borderRadius="10px"
-               border="2px solid #B5FF45"
-               bg="transparent"
-               w="146px"
-               h="40px"
-               p="10px 16px"
-               whileHover={{ y: -2 }}
-               whileTap={{ scale: 0.95 }}
-               _focus={{ bg: "#8AE400", border: "0px" }}
-               _hover={{ bg: "transparent", border: "2px solid #B5FF45" }}
-               onClick={() => navigate("/makeaproposal")}
-             >
-              Make proposal
-             </AnimatedButton>
-           </HStack>
           </Flex>
           </ContainerWrapper>
        </Flex>
