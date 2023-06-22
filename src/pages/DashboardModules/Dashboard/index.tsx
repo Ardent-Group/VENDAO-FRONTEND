@@ -3,6 +3,8 @@ import {useState, Suspense, lazy} from 'react'
 import { nanoid } from "@reduxjs/toolkit";
 import { VENDAO_SVG } from "../../../assets/svg";
 import DashboardHome from "./main";
+import { Link } from "react-router-dom";
+import { CustomButton } from "../../../hooks/customButton";
 const InvestedProject = lazy(() => import("../Investproject/index"));
 const ProductListDetail = lazy(() => import("../Investproject/ProductDetail/index"));
 const DAOVault = lazy(() => import("../DAOVault/index"));
@@ -70,9 +72,8 @@ const Dashboard = () => {
            </Suspense>
           ),
         icon: VENDAO_SVG().dashboardRouteIcon4()
-      },
+      }
   ];
-
   return (
     <Flex flexDir={"column"}>
       {/* <Container> */}
@@ -80,7 +81,11 @@ const Dashboard = () => {
           <Flex {...rootBox}>
             {/* -----------------------------------LEFT SECTION---------------------------------------------- */}
             <Flex {...leftSection} flexDir={"column"} p="30px">
-              <HStack>{VENDAO_SVG().logo2()}</HStack>
+              <HStack>
+                <Link to={"/"}>
+                  {VENDAO_SVG().logo2()}
+                </Link>
+              </HStack>
 
               <Flex mt="50px" flexDir="column">
               {dashboard_routes?.map((e, i) => (
@@ -88,7 +93,7 @@ const Dashboard = () => {
                   key={nanoid()}
                   {...singleRouteStyle}
                   as={"button"}
-                  onClick={() => setSelectedRouteIndex(i)}
+                  onClick={() => {setSelectedRouteIndex(i); setSelectedIndex(0)}}
                   bg={i === selectedRouteIndex ? "#242424" : "transparent"}
                   color={i === selectedRouteIndex ? "white" : ""}
                   _hover={{ borderRadius: `${i === selectedRouteIndex ? "0px" : ""}`,
@@ -108,17 +113,23 @@ const Dashboard = () => {
                  <HStack>{VENDAO_SVG().twitterIcon()}</HStack>
                </HStack>
             </Flex>
-            {/* -----------------------------------LEFT SECTION---------------------------------------------- */}
+            {/* -----------------------------------RIGHT SECTION---------------------------------------------- */}
             <Flex {...rightSection} overflowY="scroll" flexDir="column">
             <Flex justifyContent="flex-end" alignItems="center">
-              <Button
+              {/* <Button
                border="1px solid #000000"
                opacity="0.5"
                bg="transparent"
                color="black"
                >
                Contract address
-             </Button>
+             </Button> */}
+             <CustomButton
+               headerUsed={true} 
+               border_color='1px solid #000000'
+               bg_color='rgba(194, 194, 194, 0.2)'
+               hover_color='rgba(194, 194, 194, 0.4)'
+              />
              </Flex>
               {dashboard_routes?.map(
                 (e, i) => i === selectedRouteIndex && e.view

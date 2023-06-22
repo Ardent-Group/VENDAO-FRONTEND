@@ -21,6 +21,8 @@ import Footer from '../../components/Footer';
 import JoinDAO from '../../components/Modals/JoinDAO';
 import { useAccount } from 'wagmi';
 import { CustomButton } from '../../hooks/customButton';
+import useCallVenAccess from '../../hooks/contract/useCallVenAccess';
+import { keccak256, toHex } from 'viem';
 
 const AnimatedButton = motion(Button);
 const AnimatedText = motion(Box);
@@ -31,7 +33,21 @@ const Home = () => {
     const controls = useAnimation();
     const {isOpen, onClose, onOpen} = useDisclosure();
     let navigate = useNavigate();
+
+    // Interaction setup
     const { address } = useAccount();
+    const INVESTOR:`0x${string}` = keccak256(toHex("INVESTOR"));
+
+
+    const { data:venAccessData } = useCallVenAccess({
+      functionName: "hasRole",
+      args: [
+        INVESTOR,
+        address
+      ]
+    })
+    
+    
 
 
     useEffect(() => {
@@ -160,38 +176,56 @@ const Home = () => {
             {
               address ?
               <HStack gap="6" pt="32px">
+                {
+                  true ?
+                  <AnimatedButton
+                    bg="#B5FF45"
+                    borderRadius="10px"
+                    p="10px 16px"
+                    h="40px"
+                    _hover={{  bg: "#D9D9D9" }}
+                    _focus={{ bg: "#8AE400" }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    onClick={() => navigate("/dashboard")}
+                  >
+                    Enter VENDAO
+                  </AnimatedButton> :
+                  <AnimatedButton
+                    bg="#B5FF45"
+                    borderRadius="10px"
+                    p="10px 16px"
+                    h="40px"
+                    _hover={{  bg: "#D9D9D9" }}
+                    _focus={{ bg: "#8AE400" }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    onClick={onOpen}
+                  >
+                  Join DAO
+                  </AnimatedButton>
+                }
               <AnimatedButton
-                bg="#B5FF45"
                 borderRadius="10px"
-                w="102px"
-                p="10px 16px"
+                border="2px solid #B5FF45"
+                bg="transparent"
+                w="146px"
                 h="40px"
-                _hover={{  bg: "#D9D9D9" }}
-                _focus={{ bg: "#8AE400" }}
-                whileHover={{ scale: 1.05 }}
+                p="10px 16px"
+                whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                onClick={onOpen}
+                _focus={{ bg: "#8AE400", border: "0px" }}
+                _hover={{ bg: "transparent", border: "2px solid #B5FF45" }}
+                onClick={() => navigate("/makeaproposal")}
               >
-              Join DAO
+              Make proposal
               </AnimatedButton>
-               <AnimatedButton
-                 borderRadius="10px"
-                 border="2px solid #B5FF45"
-                 bg="transparent"
-                 w="146px"
-                 h="40px"
-                 p="10px 16px"
-                 whileHover={{ y: -2 }}
-                 whileTap={{ scale: 0.95 }}
-                 _focus={{ bg: "#8AE400", border: "0px" }}
-                 _hover={{ bg: "transparent", border: "2px solid #B5FF45" }}
-                 onClick={() => navigate("/makeaproposal")}
-               >
-                Make proposal
-               </AnimatedButton>
              </HStack> :
              <CustomButton headerUsed={false} />
             }
@@ -245,7 +279,7 @@ const Home = () => {
       
         <Flex mt="58px">
         <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing={5}>
-          {missiondetails.map((e: { num: string; title: string; subTitle: string }) => (
+          {missiondetails.map((e: { num: string; title: string; subTitle: string }, id:any) => (
           <Flex
            border="0.5px solid #CFCFCF"
            background=""
@@ -257,6 +291,7 @@ const Home = () => {
            alignItems="start"
            justify="center"
            flexDir="column"
+           key={id}
           >
             <Flex bg="#B5FF45" 
             borderRadius="20px"

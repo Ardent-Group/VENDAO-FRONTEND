@@ -68,7 +68,7 @@ const ProductListHome = () => {
   return (
     <Flex flexDir="column">
     <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing={5}>
-    {productsDetail.map((e: any) => (
+    {productsDetail.map((e: any, id:any) => (
       <Flex
         border="0.5px solid #CFCFCF"
         _hover={{ border: "1.3px solid #84DB00" }}
@@ -79,6 +79,7 @@ const ProductListHome = () => {
         w="100%"
         h="100%"
         flexDir="column"
+        key={id}
        >
         {/* --------- status button ---------- */}
           <Button

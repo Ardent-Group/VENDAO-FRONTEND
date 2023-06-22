@@ -13,7 +13,7 @@ export const vendaoCA = "0x86ebcD733D1A9bBf155E94877335db2b645106D7"
 
 const useCallVendao = ({functionName, args, watch}: callVendaoProps) => {
 
-    const { data } = useContractRead({
+    const data = useContractRead({
         address: vendaoCA,
         abi: vendaoABI,
         functionName,

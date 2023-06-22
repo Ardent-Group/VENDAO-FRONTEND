@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react'
+import {useState, memo, useEffect} from 'react'
 import { 
     Box, 
     Text,
@@ -15,8 +15,8 @@ const Navbar = () => {
 
     const tabs = [
       {
-        name: "About",
-        link: "#about"
+        name: "Home",
+        link: "/"
       },
       {
         name: "Product list",
@@ -96,16 +96,12 @@ const Navbar = () => {
             </HStack>
 
             <HStack>
-                {/* <Button
-                bg="transparent"
-                p="10px 16px"
-                h="40px"
-                border="1.5px solid rgba(181, 255, 69, 1)"
-                _hover={{ bg: "transparent" }}
-                >
-                    Connect Wallet
-                </Button> */}
-                <CustomButton headerUsed={true} />
+              <CustomButton
+               headerUsed={true} 
+               border_color='1.5px solid rgba(181, 255, 69, 1)'
+               bg_color='rgba(181, 255, 69, 0.1)'
+               hover_color='rgba(181, 255, 69, 0.2)'
+              />
             </HStack>
           </HStack>
         </ContainerWrapper>
@@ -114,4 +110,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default memo(Navbar)

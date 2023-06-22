@@ -5,17 +5,19 @@ import vendaoABI from "../constants/abi/vendao.abi.json"
 interface sendParamsProps {
     functionName: string;
     args?: Array<any>;
+    value?: bigint
 }
 
 
-const useSendVendao = ({functionName, args}: sendParamsProps) => {
+const useSendVendao = ({functionName, args, value}: sendParamsProps) => {
     // Prepare write to smart contract
     
     const {config} = usePrepareContractWrite({
         address: vendaoCA,
         abi: vendaoABI,
         functionName,
-        args
+        args,
+        value
     })
 
     // Write to the smart contract using the prepared config

@@ -1,4 +1,4 @@
-import React from 'react'
+import { useEffect, useRef } from 'react'
 import {
     Flex, 
     Text,
@@ -9,18 +9,63 @@ import {
     ModalContent,
     ModalHeader,
     ModalBody,
-    Input,
     chakra,
-    // Radio, RadioGroup,
-    FormControl,
-    FormLabel, 
-    ModalCloseButton, 
+    ModalCloseButton,
+    Spinner, 
   } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
+import { parseEther } from 'viem';
+import useSendVendao from '../../../hooks/contract/useSendVendao';
+import { useToast } from '@chakra-ui/react';
 
 const AnimatedButton = motion(Button);
 
 const JoinDAO = ({isOpen, onClose}: any) => {
+
+  const toast = useToast();
+
+  const DAO_FEE = parseEther("1");
+
+  const { venWrite, venLoading, waitError, waitSuccess, waitLoading } = useSendVendao({
+    functionName: "joinDAO",
+    value: DAO_FEE
+  })
+
+  
+
+  const handleSubmit = (e:any) => {
+    e.preventDefault();
+
+    venWrite?.();
+  }
+
+  useEffect(() => {
+    let rerun:boolean = true;
+
+    if(waitError && rerun) {
+      toast({
+        title: "Error",
+        description: "Error joining Ven DAO",
+        status: "error",
+        duration: 5000,
+        isClosable: true
+      })
+    } 
+    if(waitSuccess && rerun) {
+      toast({
+        title: "Successfully Joined Vendao",
+        description: "You have succesfully joined Ven DAO",
+        status: "success",
+        duration: 5000,
+        isClosable: true
+      })
+    }
+  
+    return () => {
+      rerun = false;
+    }
+  }, [waitError, waitSuccess])
+  
 
   return (
     <>
@@ -43,37 +88,7 @@ const JoinDAO = ({isOpen, onClose}: any) => {
         <ModalCloseButton />
         <ModalBody>
             <Stack mb="20px">
-                <form>
-                <FormControl id="name" mb={2}>
-                   <FormLabel fontFamily="Gopher" fontSize="16px" fontWeight="600">Name</FormLabel>
-                   <Input
-                     type="text"
-                     name="name"
-                     w="100%"
-                     h="44px"
-                     borderRadius="20px"
-                     border="0.5px solid #9F9F9F"
-                     _hover={{border: "1px solid #9F9F9F", outline: "none"}}
-                     _focus={{ outline: "none", boxShadow: "none", border: "2px solid #9F9F9F" }}
-                     //value={formData.name}
-                     //onChange={handleChange}
-                     required
-                   />
-                 </FormControl> 
-                </form>
-
-                <Flex flexDir="column">
-                   {/* <Text color="16px" fontWeight="600">
-                    You will be charged $131 for the purchase of accessibility NFT. Do you agree to this?
-                   </Text>
-
-                   <RadioGroup>
-                      <Flex mt="10px" flexDir="column" gap="2">
-                      <Radio value="yes" gap="2" border="1px solid #404040" colorScheme='green'>Yes</Radio>
-                      <Radio value="no" gap="2" border="1px solid #404040" colorScheme='green'>No</Radio>
-                     </Flex>
-                  </RadioGroup> */}
-
+                <Flex flexDir="column" my={"20px"}>
                   <Text color="16px" fontWeight="600">
                    You’d be required to deposit 30,000 FTM to join the DAO.
                    </Text>
@@ -84,7 +99,6 @@ const JoinDAO = ({isOpen, onClose}: any) => {
                 <AnimatedButton
                   bg="#B5FF45"
                   borderRadius="10px"
-                  w="102px"
                   p="10px 16px"
                   h="40px"
                   mt="20px"
@@ -95,8 +109,12 @@ const JoinDAO = ({isOpen, onClose}: any) => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6 }}
+                  onClick={handleSubmit}
+                  disabled={venLoading || waitLoading}
                 >
-                Join DAO
+                  {
+                    (venLoading || waitLoading) ? <>Loading <Spinner ml={"10px"} size={"sm"} /> </> : "Join DAO" 
+                  }
                </AnimatedButton>
                </Flex>
               

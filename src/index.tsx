@@ -8,6 +8,8 @@ import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import { fantom, fantomTestnet } from "viem/chains";
 import { publicProvider } from "wagmi/providers/public"
 
+
+
 const { chains, publicClient } = configureChains(
   [fantom, fantomTestnet],
   [

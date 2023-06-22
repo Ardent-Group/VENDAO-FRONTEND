@@ -2,11 +2,14 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { motion } from 'framer-motion'
 import Fantom from "../assets/images/fantom.svg"
 import {
-    Box, Button
+    Box, Button, border
 } from "@chakra-ui/react";
 
 interface connectProps {
     headerUsed: boolean
+    border_color?: string;
+    bg_color?: string;
+    hover_color?: string;
 }
 
 const AnimatedButton = motion(Button);
@@ -50,7 +53,7 @@ export const CustomButton = (props:connectProps) => {
                                 bg="transparent"
                                 p="10px 16px"
                                 h="40px"
-                                border="1.5px solid rgba(181, 255, 69, 1)"
+                                border={props.border_color}
                                 _hover={{bg: "transparent" }}
                                 >
                                     Connect Wallet
@@ -97,16 +100,15 @@ export const CustomButton = (props:connectProps) => {
                     return (
                         <Box
                          bg="transparent"
-                         p=""
-                         h="40px"
-                         border="1.5px solid rgba(181, 255, 69, 1)"
+                         border={props.border_color}
                          _hover={{ bg: "transparent"}}
                          style={{ display: 'flex' }}
                         >
                             <Button
                              onClick={openChainModal}
-                             bg={"rgba(181, 255, 69, 0.1)"}
-                             _hover={{ bg: "rgba(181, 255, 69, 0.2)"}}
+                             bg={props.bg_color}
+                             _hover={{ bg: props.hover_color}}
+                             borderRadius={"0px"}
                             >
                                 <img
                                  alt="Fantom"
@@ -117,8 +119,8 @@ export const CustomButton = (props:connectProps) => {
                             <Button
                             onClick={openAccountModal}
                             bg="transparent"
-                            h="40px"
-                            _hover={{ bg: "rgba(181, 255, 69, 0.2)" }}
+                            borderRadius={"0px"}
+                            _hover={{ bg: props.hover_color }}
                             style={{ display: 'block'}}
                             >
                                 <p>{account.displayBalance}</p>
