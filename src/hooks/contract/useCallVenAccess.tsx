@@ -9,7 +9,7 @@ interface venAccessParams {
 }
 
 
-export const venAccessCA = "0x9Ab47417e5dEec053c040aa426A8054479309762";
+export const venAccessCA = "0xb52274208f79244ACD3117fD50feE279fBdaFd15";
 
 const useCallVenAccess = ({functionName, args, watch}: venAccessParams) => {
 

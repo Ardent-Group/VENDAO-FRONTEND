@@ -87,71 +87,17 @@
       "type": "event"
     },
     {
-      "anonymous": false,
-      "inputs": [
+      "inputs": [],
+      "name": "DAO_FTM_BALANCE",
+      "outputs": [
         {
-          "indexed": false,
-          "internalType": "address",
+          "internalType": "uint256",
           "name": "",
-          "type": "address"
+          "type": "uint256"
         }
       ],
-      "name": "_leaveDao",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "internalType": "uint128",
-          "name": "",
-          "type": "uint128"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint128",
-          "name": "",
-          "type": "uint128"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint128",
-          "name": "",
-          "type": "uint128"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint128",
-          "name": "",
-          "type": "uint128"
-        }
-      ],
-      "name": "changeTime",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "internalType": "uint40",
-          "name": "",
-          "type": "uint40"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint40",
-          "name": "",
-          "type": "uint40"
-        }
-      ],
-      "name": "changeValidityTime",
-      "type": "event"
-    },
-    {
-      "stateMutability": "payable",
-      "type": "fallback"
+      "stateMutability": "view",
+      "type": "function"
     },
     {
       "inputs": [],
@@ -206,19 +152,6 @@
       "type": "function"
     },
     {
-      "inputs": [],
-      "name": "VenAccessTicket",
-      "outputs": [
-        {
-          "internalType": "contract IVenAccessTicket",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
       "inputs": [
         {
           "internalType": "uint48",
@@ -242,19 +175,6 @@
       "name": "examineProject",
       "outputs": [],
       "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "ftmBalance",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -294,13 +214,29 @@
       "type": "function"
     },
     {
-      "inputs": [],
-      "name": "investTime",
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "investorDetails",
       "outputs": [
         {
           "internalType": "uint128",
-          "name": "",
+          "name": "investmentCount",
           "type": "uint128"
+        },
+        {
+          "internalType": "uint128",
+          "name": "shareCount",
+          "type": "uint128"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amountSpent",
+          "type": "uint256"
         }
       ],
       "stateMutability": "view",
@@ -316,13 +252,6 @@
           "type": "uint256"
         }
       ],
-      "stateMutability": "payable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "leaveDAO",
-      "outputs": [],
       "stateMutability": "payable",
       "type": "function"
     },
@@ -568,12 +497,27 @@
     {
       "inputs": [
         {
-          "internalType": "uint128",
-          "name": "_acceptance",
-          "type": "uint128"
+          "internalType": "uint48",
+          "name": "_proposalId",
+          "type": "uint48"
+        },
+        {
+          "internalType": "string",
+          "name": "_urlToStore",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_fundingRequest",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_equityOffering",
+          "type": "uint256"
         }
       ],
-      "name": "setAcceptanceFee",
+      "name": "reProposeProject",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -582,16 +526,11 @@
       "inputs": [
         {
           "internalType": "uint128",
-          "name": "_validityTime",
-          "type": "uint128"
-        },
-        {
-          "internalType": "uint128",
-          "name": "_investTime",
+          "name": "_acceptance",
           "type": "uint128"
         }
       ],
-      "name": "setTime",
+      "name": "setVar",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -684,19 +623,6 @@
           "internalType": "uint256",
           "name": "",
           "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "validityTime",
-      "outputs": [
-        {
-          "internalType": "uint128",
-          "name": "",
-          "type": "uint128"
         }
       ],
       "stateMutability": "view",
