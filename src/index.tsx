@@ -7,6 +7,8 @@ import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import { fantom, fantomTestnet } from "viem/chains";
 import { publicProvider } from "wagmi/providers/public"
+import { projectId } from './global_variables';
+
 
 
 
@@ -19,7 +21,7 @@ const { chains, publicClient } = configureChains(
 
 const { connectors } = getDefaultWallets({
   appName: "Vendao",
-  projectId: "91123e3eafe4c736a115f6e3f6484a47",
+  projectId: projectId,
   chains
 })
 

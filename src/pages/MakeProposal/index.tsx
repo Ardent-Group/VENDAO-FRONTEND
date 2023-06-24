@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, DragEvent } from 'react';
+import { useState, memo, ChangeEvent, DragEvent } from 'react';
 import {Box, 
     Button, 
     Flex, 
@@ -16,71 +16,76 @@ import Footer from '../../components/Footer'
 import { VENDAO_SVG } from '../../assets/svg';
 import PopoverWithMouseover from '../../components/PopoverContent'
 import { motion } from 'framer-motion'
+import { useDebounce, useDebouncedCallback } from 'use-debounce';
 
 const AnimatedButton = motion(Button);
+
+
+interface inputFileTypes {
+  inputedLogo: File | null;
+  inputedVideo: File | null;
+  inputedDocument: File | null;
+}
+
+interface inputValueTypes {
+  name: string;
+  description: string;
+  email: string;
+  github: string;
+  social_media: string;
+  community: string;
+  funding_amount: string;
+  equity: string;
+}
 
 const MakeProposal = () => {
 
     const {root} = useMakeProposalStyles();
 
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
-    const [selectedVideo, setSelectedVideo] = useState<File | null>(null);
+    const [inputFile, setInputFile] = useState<inputFileTypes>({
+      inputedLogo: null,
+      inputedVideo: null,
+      inputedDocument: null
+    })
+    
+    const [inputValue, setInputValue] = useState<inputValueTypes>({
+      name: "",
+      description: "",
+      email: "",
+      github: "",
+      social_media: "",
+      community: "",
+      funding_amount: "",
+      equity: ""
+    })
 
-    // --------------------- UPLOAD LOGO Functionality -------------------------------
-
-    console.log(selectedFile, "jlk");
+    const [value] = useDebounce(inputValue, 1000);
+    
     
 
-    const handleFileSelect = (event: ChangeEvent<HTMLInputElement>) => {
+    // --------------------- UPLOAD File Functionality -------------------------------    
+
+    const handleFileInput = (event:ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0];
-      //@ts-ignore
-      setSelectedFile(file);
-    };
-  
-    const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
-      event.preventDefault();
-    };
-  
-    const handleDrop = (event: DragEvent<HTMLDivElement>) => {
-      event.preventDefault();
-      const file = event.dataTransfer.files?.[0];
-      setSelectedFile(file);
-    };
 
-    const handleBrowseClick = () => {
-        const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
-        fileInput?.click();
+      setInputFile({...inputFile, [event.target.name]: file})
+    }
 
-        console.log(fileInput, "dkfj");
-        
-     };
+    const handleFileClick = (name:string) => {
+      const fileInput = document.querySelector(`input[name=${name}]`) as HTMLInputElement
+      fileInput?.click();
+    }
 
-    // ---------------------- The end of Upload Logo -------------------------------------
+    // --------------------- Input file functionality ------------------------------
 
+    const handleChange = (e:any) => {
+      setInputValue({...inputValue, [e.target.name]: e.target.value})
+    }
 
-    //----------------------- UPLOAD VIDEO Functionality ---------------------------------
+    const handleSubmit = (e:any) => {
 
-    const handleVideoSelect = (e: ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-         //@ts-ignore
-        setSelectedVideo(file);
-    };
+    }
 
-    const handleDragOverVideo = (e: DragEvent<HTMLDivElement>) => {
-        e.preventDefault();
-    };
-
-    const handleDropVideo = (e: DragEvent<HTMLDivElement>) => {
-       e.preventDefault();
-       const file = e.dataTransfer.files?.[0];
-        setSelectedVideo(file);
-    };
-
-    const handleBrowseVideoClick = () => {
-      const videoInput = document.getElementById("video") as HTMLInputElement;
-      // const videoInput = document.querySelector('input[type="file"]') as HTMLInputElement;
-      videoInput?.click();
-    };
 
   return (
     <Box>
@@ -119,7 +124,9 @@ const MakeProposal = () => {
            </Text>
          </motion.div>
 
-         <form>
+         <form onSubmit={() => console.log("hfj")}>
+
+           {/* ------------------------ Project Name ------------------------- */}
           <FormControl id="name" mb={5}>
             <FormLabel fontFamily="Gopher" fontSize="16px" fontWeight="600">Project Name</FormLabel>
             <Input
@@ -132,6 +139,7 @@ const MakeProposal = () => {
               _hover={{border: "1px solid #9F9F9F", outline: "none"}}
               _focus={{ outline: "none", boxShadow: "none", border: "2px solid #9F9F9F" }}
               required
+              onChange={handleChange}
             />
           </FormControl>
           
@@ -144,13 +152,14 @@ const MakeProposal = () => {
             </HStack>
             </FormLabel>
             <Textarea
-              name="message"
+              name="description"
               p="10px"
               borderRadius="20px"
               border="0.5px solid #9F9F9F"
               _hover={{border: "1px solid #9F9F9F", outline: "none"}}
               _focus={{ outline: "none", boxShadow: "none", border: "2px solid #9F9F9F" }}
               required
+              onChange={handleChange}
             />
           </FormControl>
            
@@ -158,23 +167,22 @@ const MakeProposal = () => {
           <FormControl mb={5}>
           <FormLabel fontFamily="Gopher" fontSize="16px" fontWeight="600">Upload your logo</FormLabel>
           <Box>
-            <input type="file" accept=".jpg, .png, .svg, .gif, .jpeg"  style={{ display: 'none' }} onChange={handleFileSelect} />
+            <input name='inputedLogo' type="file" accept=".jpg, .png, .svg, .gif, .jpeg"  style={{ display: 'none' }} onChange={handleFileInput} />
             <Box
+              id='drop_file'
               border="0.5px dashed #9F9F9F"
               borderRadius="20px"
               w="210px"
               p="20px"
               textAlign="center"
-              onDragOver={handleDragOver}
-              onDrop={handleDrop}
-              onClick={handleBrowseClick}
+              onClick={() => handleFileClick("inputedLogo")}
               cursor="pointer"
             >
-             {selectedFile ? (
+             {inputFile.inputedLogo ? (
                <Box>
-                 <img src={URL.createObjectURL(selectedFile)} alt="Logo" width="200px" height="200px" />
-                 <Button mt="4" onClick={() => setSelectedFile(null)} bg="none" _hover={{ bg: "none" }}>
-                    <Text color="#9F9F9F" fontWeight={500}>Remove</Text>
+                 <img src={URL.createObjectURL(inputFile.inputedLogo)} alt="Logo" width="200px" height="200px" />
+                 <Button mt="4" bg="none" _hover={{ bg: "none" }}>
+                    <Text color="#9F9F9F" fontWeight={500}>Change</Text>
                 </Button>
                </Box>
              ) : (
@@ -182,7 +190,7 @@ const MakeProposal = () => {
                  <Button bg="none" _hover={{ bg: "none" }}>
                     {VENDAO_SVG().uploadIcon()}
                  </Button>
-                 <Text mt="4" color="#9F9F9F" fontWeight={500}>Click or Drag file here</Text>
+                 <Text mt="4" color="#9F9F9F" fontWeight={500}>Click to Upload file</Text>
                </Box>
              )}
            </Box>
@@ -191,7 +199,7 @@ const MakeProposal = () => {
            
            {/* --------------------------- Project Email ---------------------------- */}
           <FormControl id="email" mb={5}>
-            <FormLabel fontFamily="Gopher" fontSize="16px" fontWeight="600">Project Mail (Optional)</FormLabel>
+            <FormLabel fontFamily="Gopher" fontSize="16px" fontWeight="600">Project Mail</FormLabel>
             <Input
               type="email"
               name="email"
@@ -202,6 +210,7 @@ const MakeProposal = () => {
               _hover={{border: "1px solid #9F9F9F", outline: "none"}}
               _focus={{ outline: "none", boxShadow: "none", border: "2px solid #9F9F9F" }}
               required
+              onChange={handleChange}
             />
           </FormControl>
            
@@ -214,23 +223,21 @@ const MakeProposal = () => {
             </HStack>
             </FormLabel>
            <Box>
-            <input id='video' type="file" accept=".mp4,.gif,.mkv,.webm,.mov,.wmv,.avi,.flv" style={{ display: 'none' }} onChange={handleVideoSelect} />
+            <input name='inputedVideo' type="file" accept=".mp4,.gif,.mkv,.webm,.mov,.wmv,.avi,.flv" style={{ display: 'none' }} onChange={handleFileInput} />
              <Box
                border="0.5px dashed #9F9F9F"
                borderRadius="20px"
                w="210px"
                p="20px"
                textAlign="center"
-               onDragOver={handleDragOverVideo}
-               onDrop={handleDropVideo}
-               onClick={handleBrowseVideoClick}
+               onClick={() => handleFileClick("inputedVideo")}
                cursor="pointer"
              >
-               {selectedVideo ? (
+               {inputFile.inputedVideo ? (
                  <Box>
-                   <video src={URL.createObjectURL(selectedVideo)} width="400px" height="300px" controls />
-                   <Button mt="4" onClick={() => setSelectedVideo(null)} bg="none" _hover={{ bg: "none" }}>
-                   <Text color="#9F9F9F" fontWeight={500}>Remove</Text>
+                   <video src={URL.createObjectURL(inputFile.inputedVideo)} width="400px" height="300px" controls />
+                   <Button mt="4" bg="none" _hover={{ bg: "none" }}>
+                   <Text color="#9F9F9F" fontWeight={500}>Change</Text>
                    </Button>
                  </Box>
                ) : (
@@ -238,19 +245,57 @@ const MakeProposal = () => {
                    <Button bg="none" _hover={{ bg: "none" }}>
                    {VENDAO_SVG().uploadIcon()}
                    </Button>
-                   <Text mt="4" color="#9F9F9F" fontWeight={500}>Click or Drag file here</Text>
+                   <Text mt="4" color="#9F9F9F" fontWeight={500}>Click to Upload file</Text>
                  </Box>
                )}
              </Box>
            </Box>
           </FormControl>
+
+           {/* --------------------------- Upload Document --------------------------- */}
+           <FormControl mb={5}>
+            <FormLabel fontFamily="Gopher" fontSize="16px" fontWeight="600">
+              <HStack gap={0}>
+              <Text>Upload Document Backing Proposal</Text>
+              <PopoverWithMouseover popoverContent="Present necessary document backing your project solution, equity offering to Ven DAO and detailed explanation on the necessary things to take note of. Must e in pdf format." />
+              </HStack>
+              </FormLabel>
+            <Box>
+              <input name='inputedDocument' type="file" accept=".pdf" style={{ display: 'none' }} onChange={handleFileInput} />
+              <Box
+                border="0.5px dashed #9F9F9F"
+                borderRadius="20px"
+                w="210px"
+                p="20px"
+                textAlign="center"
+                onClick={() => handleFileClick("inputedDocument")}
+                cursor="pointer"
+              >
+                {inputFile.inputedDocument ? (
+                  <Box>
+                    <embed src={URL.createObjectURL(inputFile.inputedDocument)} type='application/pdf' width="100%" height="100%" />
+                    <Button mt="4" bg="none" _hover={{ bg: "none" }}>
+                    <Text color="#9F9F9F" fontWeight={500}>Change</Text>
+                    </Button>
+                  </Box>
+                ) : (
+                  <Box>
+                    <Button bg="none" _hover={{ bg: "none" }}>
+                    {VENDAO_SVG().uploadIcon()}
+                    </Button>
+                    <Text mt="4" color="#9F9F9F" fontWeight={500}>Click or Drag file here</Text>
+                  </Box>
+                )}
+              </Box>
+            </Box>
+           </FormControl>
            
            {/* ------------------------- Github link --------------------------------- */}
           <FormControl id="name" mb={5}>
             <FormLabel fontFamily="Gopher" fontSize="16px" fontWeight="600">Github Link</FormLabel>
             <Input
               type="text"
-              name="name"
+              name="github"
               w="100%"
               h="53px"
               borderRadius="20px"
@@ -258,6 +303,7 @@ const MakeProposal = () => {
               _hover={{border: "1px solid #9F9F9F", outline: "none"}}
               _focus={{ outline: "none", boxShadow: "none", border: "2px solid #9F9F9F" }}
               required
+              onChange={handleChange}
             />
           </FormControl>
 
@@ -266,7 +312,7 @@ const MakeProposal = () => {
             <FormLabel fontFamily="Gopher" fontSize="16px" fontWeight="600">Social Media Link</FormLabel>
             <Input
               type="text"
-              name="name"
+              name="social_media"
               w="100%"
               h="53px"
               borderRadius="20px"
@@ -274,6 +320,7 @@ const MakeProposal = () => {
               _hover={{border: "1px solid #9F9F9F", outline: "none"}}
               _focus={{ outline: "none", boxShadow: "none", border: "2px solid #9F9F9F" }}
               required
+              onChange={handleChange}
             />
           </FormControl>
 
@@ -282,7 +329,7 @@ const MakeProposal = () => {
             <FormLabel fontFamily="Gopher" fontSize="16px" fontWeight="600">Link To Community</FormLabel>
             <Input
               type="text"
-              name="name"
+              name="community"
               w="100%"
               h="53px"
               borderRadius="20px"
@@ -290,6 +337,7 @@ const MakeProposal = () => {
               _hover={{border: "1px solid #9F9F9F", outline: "none"}}
               _focus={{ outline: "none", boxShadow: "none", border: "2px solid #9F9F9F" }}
               required
+              onChange={handleChange}
             />
           </FormControl>
 
@@ -311,8 +359,8 @@ const MakeProposal = () => {
             </HStack>
             </FormLabel>
             <Input
-              type="text"
-              name="name"
+              type="number"
+              name="funding_amount"
               w="100%"
               h="53px"
               borderRadius="20px"
@@ -320,6 +368,7 @@ const MakeProposal = () => {
               _hover={{border: "1px solid #9F9F9F", outline: "none"}}
               _focus={{ outline: "none", boxShadow: "none", border: "2px solid #9F9F9F" }}
               required
+              onChange={handleChange}
             />
           </FormControl>
 
@@ -332,8 +381,8 @@ const MakeProposal = () => {
             </HStack>
             </FormLabel>
             <Input
-              type="text"
-              name="name"
+              type="number"
+              name="equity"
               w="100%"
               h="53px"
               borderRadius="20px"
@@ -341,6 +390,7 @@ const MakeProposal = () => {
               _hover={{border: "1px solid #9F9F9F", outline: "none"}}
               _focus={{ outline: "none", boxShadow: "none", border: "2px solid #9F9F9F" }}
               required
+              onChange={handleChange}
             />
           </FormControl>
 
@@ -358,6 +408,7 @@ const MakeProposal = () => {
              initial={{ opacity: 0, y: 20 }}
              animate={{ opacity: 1, y: 0 }}
              transition={{ duration: 0.6 }}
+             type="submit"
             >
               Submit proposal
             </AnimatedButton>
@@ -376,7 +427,7 @@ const MakeProposal = () => {
   )
 }
 
-export default MakeProposal
+export default memo(MakeProposal)
 
 const useMakeProposalStyles = () => {
     return {

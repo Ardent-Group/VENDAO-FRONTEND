@@ -91,8 +91,8 @@ const Dashboard = () => {
               {dashboard_routes?.map((e, i) => (
                 <Flex
                   key={nanoid()}
+                  sx={{cursor: "pointer"}}
                   {...singleRouteStyle}
-                  as={"button"}
                   onClick={() => {setSelectedRouteIndex(i); setSelectedIndex(0)}}
                   bg={i === selectedRouteIndex ? "#242424" : "transparent"}
                   color={i === selectedRouteIndex ? "white" : ""}
@@ -116,14 +116,6 @@ const Dashboard = () => {
             {/* -----------------------------------RIGHT SECTION---------------------------------------------- */}
             <Flex {...rightSection} overflowY="scroll" flexDir="column">
             <Flex justifyContent="flex-end" alignItems="center">
-              {/* <Button
-               border="1px solid #000000"
-               opacity="0.5"
-               bg="transparent"
-               color="black"
-               >
-               Contract address
-             </Button> */}
              <CustomButton
                headerUsed={true} 
                border_color='1px solid #000000'
