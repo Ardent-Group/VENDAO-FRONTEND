@@ -28,6 +28,9 @@ const MakeProposal = () => {
 
     // --------------------- UPLOAD LOGO Functionality -------------------------------
 
+    console.log(selectedFile, "jlk");
+    
+
     const handleFileSelect = (event: ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0];
       //@ts-ignore
@@ -47,6 +50,9 @@ const MakeProposal = () => {
     const handleBrowseClick = () => {
         const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
         fileInput?.click();
+
+        console.log(fileInput, "dkfj");
+        
      };
 
     // ---------------------- The end of Upload Logo -------------------------------------
@@ -71,7 +77,8 @@ const MakeProposal = () => {
     };
 
     const handleBrowseVideoClick = () => {
-      const videoInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+      const videoInput = document.getElementById("video") as HTMLInputElement;
+      // const videoInput = document.querySelector('input[type="file"]') as HTMLInputElement;
       videoInput?.click();
     };
 
@@ -172,7 +179,7 @@ const MakeProposal = () => {
                </Box>
              ) : (
                <Box>
-                 <Button  onClick={handleBrowseClick} bg="none" _hover={{ bg: "none" }}>
+                 <Button bg="none" _hover={{ bg: "none" }}>
                     {VENDAO_SVG().uploadIcon()}
                  </Button>
                  <Text mt="4" color="#9F9F9F" fontWeight={500}>Click or Drag file here</Text>
@@ -207,7 +214,7 @@ const MakeProposal = () => {
             </HStack>
             </FormLabel>
            <Box>
-            <input type="file" accept=".mp4,.gif" style={{ display: 'none' }} onChange={handleVideoSelect} />
+            <input id='video' type="file" accept=".mp4,.gif,.mkv,.webm,.mov,.wmv,.avi,.flv" style={{ display: 'none' }} onChange={handleVideoSelect} />
              <Box
                border="0.5px dashed #9F9F9F"
                borderRadius="20px"
@@ -228,7 +235,7 @@ const MakeProposal = () => {
                  </Box>
                ) : (
                  <Box>
-                   <Button onClick={handleBrowseVideoClick} bg="none" _hover={{ bg: "none" }}>
+                   <Button bg="none" _hover={{ bg: "none" }}>
                    {VENDAO_SVG().uploadIcon()}
                    </Button>
                    <Text mt="4" color="#9F9F9F" fontWeight={500}>Click or Drag file here</Text>
