@@ -2,7 +2,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { motion } from 'framer-motion'
 import Fantom from "../assets/images/fantom.svg"
 import {
-    Box, Button, border
+    Box, Button
 } from "@chakra-ui/react";
 
 interface connectProps {
@@ -54,7 +54,35 @@ export const CustomButton = (props:connectProps) => {
                                 p="10px 16px"
                                 h="40px"
                                 border={props.border_color}
-                                _hover={{bg: "transparent" }}
+                                borderRadius="10px"
+                                outline="none !important"
+                                transition="all 0.3s ease"
+                                position="relative"
+                                display="inline-block"
+                                zIndex="1"
+                                _after={{
+                                    position: "absolute",
+                                    content: '""',
+                                    width: "0",
+                                    height: "100%",
+                                    top: "0",
+                                    right: "0",
+                                    // direction: "rtl",
+                                    dir: "rtl",
+                                    zIndex: "-1",
+                                    background: "#B5FF45",
+                                    transition: "all 0.5s ease",
+                                    borderRadius: "10px"
+                                }}
+                                _hover={{
+                                    bg: "transparent", color: "rgb(0, 0, 0)",
+                                    "&:after": {
+                                      righ: "auto",
+                                      left: 0,
+                                      width: "100%",
+                                    },
+                                  }}
+                                  _active={{ top: "2px" }}
                                 >
                                     Connect Wallet
                                 </Button>
