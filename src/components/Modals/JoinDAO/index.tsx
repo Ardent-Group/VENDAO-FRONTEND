@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import {
     Flex, 
     Text,
@@ -64,7 +64,7 @@ const JoinDAO = ({isOpen, onClose}: any) => {
     return () => {
       rerun = false;
     }
-  }, [waitError, waitSuccess])
+  }, [waitError, waitSuccess, toast])
   
 
   return (

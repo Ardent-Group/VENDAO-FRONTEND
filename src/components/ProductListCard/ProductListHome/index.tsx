@@ -10,8 +10,13 @@ import {
 import { VENDAO_SVG } from '../../../assets/svg'
 import { productsDetail } from '../../../utils/products'
 import { useNavigate } from 'react-router-dom'
+import useCallVendao from '../../../hooks/contract/useCallVendao'
+import { hexToDecimal } from '../../../hooks/constants/helpers'
+import ProposalTemplate from '../../ProposalTemplate'
 
 const ProductListHome = () => {
+  const projectProposalLimit = 3;
+
 
   let navigate = useNavigate();
 
@@ -64,10 +69,38 @@ const ProductListHome = () => {
     // Scroll back to top
     window.scrollTo(0, 0);
   };
+
+  const {data:getLength}:any = useCallVendao({
+    functionName: "getLength"
+  })
+
+  let getProposalLength:any;
+  if(getLength) getProposalLength = hexToDecimal(getLength[0])
+
+  const getProposalProjects = () => {
+    if(!getProposalLength) return null;
+
+    const proposalProjects:any[] = [];
+    let setLimit = Math.abs(getProposalLength - projectProposalLimit);
+    for(let i = getProposalLength - 1; i >= setLimit; i--){
+      proposalProjects.push(
+        <ProposalTemplate
+         key={i}
+         id={i}
+         clickView={handleClickView(i)}
+        />
+      )
+    }
+
+    return proposalProjects;
+  }
   
   return (
     <Flex flexDir="column">
     <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing={5}>
+      {
+        getProposalProjects()
+      }
     {productsDetail.map((e: any, id:any) => (
       <Flex
         border="0.5px solid #CFCFCF"

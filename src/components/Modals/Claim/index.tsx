@@ -1,4 +1,4 @@
-import React from 'react'
+import { useEffect } from 'react'
 import {
     Text,
     Modal,
@@ -8,9 +8,57 @@ import {
     ModalContent,
     ModalBody,
     HStack,
+    useToast,
+    Spinner
   } from '@chakra-ui/react';
+import useSendVendao from '../../../hooks/contract/useSendVendao';
 
-const Claim = ({isOpen, onClose}: any) => {
+const Claim = ({isOpen, onClose, claimId}: any) => {
+
+  const toast = useToast()
+
+  const {venLoading, venWrite, waitError, waitSuccess, waitLoading} = useSendVendao({
+    functionName: "claim",
+    args: [
+      claimId ? claimId.toString() : "0"
+    ]
+  })
+
+
+  useEffect(() => {
+    let rerun:boolean = true;
+
+    if(waitError && rerun){
+      toast({
+        title: "Error",
+        description: "Error Claiming Equity",
+        status: "error",
+        duration: 5000,
+        isClosable: true
+      })
+    }
+    if(waitSuccess && rerun){
+      toast({
+        title: "Successful",
+        description: "Succesfully Claimed Equity",
+        status: "success",
+        duration: 5000,
+        isClosable: true
+      })
+    }
+  
+    return () => {
+      rerun = false;
+    }
+
+  }, [waitError, waitSuccess, toast])
+
+  const handleSubmit = (e:any) => {
+    e.preventDefault();
+
+    venWrite?.();
+  }
+
   return (
     <>
     <Modal
@@ -41,8 +89,14 @@ const Claim = ({isOpen, onClose}: any) => {
            bg="#B5FF45"
            _hover={{ bg: "#D9D9D9" }}
            _focus={{ bg: "#8AE400" }}
+           onClick={handleSubmit}
+           disabled={venLoading || waitLoading}
          >
-           <Text color="#171717" fontWeight="700" fontSize="16px">Claim</Text>
+          <Text color="#171717" fontWeight="700" fontSize="16px">
+            {
+              (venLoading || waitLoading) ? <>Loading <Spinner ml={"10px"} size={"sm"}/></>: "Claim"
+            }
+          </Text>
           </Button>
 
             <Button
@@ -55,6 +109,7 @@ const Claim = ({isOpen, onClose}: any) => {
               _focus={{ bg: "#8AE400", border: "0px" }}
               _hover={{ bg: "transparent", border: "2px solid #B5FF45" }}
               onClick={onClose}
+              disabled={venLoading || waitLoading}
             >
                 Cancel
             </Button>
