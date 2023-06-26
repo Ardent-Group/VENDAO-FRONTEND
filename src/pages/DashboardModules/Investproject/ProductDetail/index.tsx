@@ -4,14 +4,17 @@ import {Box,
     Flex, 
     HStack, 
     Text,
-    Image
+    Image,
+    useDisclosure,
   } from '@chakra-ui/react'
 import { ProductDetail, productsDetail } from '../../../../utils/products';
 import { VENDAO_SVG } from '../../../../assets/svg';
+import InvestProject from '../../../../components/Modals/InvestinaProject';
 
 const ProductListDetail = ({setSelectedIndex}: any) => {
 
-    
+    const {isOpen, onClose, onOpen} = useDisclosure();
+
     const detail: ProductDetail | undefined = productsDetail.find((item: ProductDetail) => item.id === `${item.id}`);
 
     if (!detail) {
@@ -41,6 +44,7 @@ const ProductListDetail = ({setSelectedIndex}: any) => {
           p="10px 16px"
           w="186px"
           h="40px"
+          onClick={onOpen}
           >
             Invest in this project
           </Button>
@@ -100,6 +104,11 @@ const ProductListDetail = ({setSelectedIndex}: any) => {
       </Flex>
 
       </Flex>
+
+         <InvestProject 
+          isOpen={isOpen}
+          onClose={onClose}
+         />
     </Box>
   )
 }

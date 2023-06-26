@@ -1,4 +1,4 @@
-import { Flex, Stack, Text, IconButton, Spinner, HStack, Button } from "@chakra-ui/react";
+import { Flex, Stack, Text, IconButton, Spinner, HStack} from "@chakra-ui/react";
 import {useState, Suspense, lazy} from 'react'
 import { nanoid } from "@reduxjs/toolkit";
 import { VENDAO_SVG } from "../../../assets/svg";
