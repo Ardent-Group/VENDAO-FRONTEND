@@ -47,9 +47,6 @@ const Home = () => {
       ]
     })
     
-    
-
-
     useEffect(() => {
       const handleScroll = () => {
         const scrollOffset = window.innerHeight * 0.7; 
@@ -220,8 +217,34 @@ const Home = () => {
                 p="10px 16px"
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                _focus={{ bg: "#8AE400", border: "0px" }}
-                _hover={{ bg: "transparent", border: "2px solid #B5FF45" }}
+                outline="none !important"
+                transition="all 0.3s ease"
+                position="relative"
+                display="inline-block"
+                zIndex="1"
+                _after={{
+                    position: "absolute",
+                    content: '""',
+                    width: "0",
+                    height: "100%",
+                    top: "0",
+                    right: "0",
+                    // direction: "rtl",
+                    dir: "rtl",
+                    zIndex: "-1",
+                    background: "#B5FF45",
+                    transition: "all 0.5s ease",
+                    borderRadius: "10px"
+                }}
+                _hover={{
+                    bg: "transparent", color: "rgb(0, 0, 0)",
+                    "&:after": {
+                      righ: "auto",
+                      left: 0,
+                      width: "100%",
+                    },
+                  }}
+                 _active={{ top: "2px" }}
                 onClick={() => navigate("/makeaproposal")}
               >
               Make proposal
