@@ -8,6 +8,8 @@ import {Box,
     FormLabel,
     Input,
     Textarea,
+    useToast,
+    Spinner
   } from '@chakra-ui/react'
 import ContainerWrapper from '../../components/ContainerWrapper'
 import Navbar from '../../components/Navbar'
@@ -20,37 +22,14 @@ import { NFTStorage } from 'nft.storage';
 import { api_keys } from '../../global_variables';
 import { useApproveToken } from '../../hooks/contract/useApproveToken';
 import { useAccount } from 'wagmi';
-import { useToast } from '@chakra-ui/react';
-import { Spinner } from '@chakra-ui/react';
+import { inputFileTypes, inputValueTypes } from './types';
 
 const AnimatedButton = motion(Button);
-
-
-interface inputFileTypes {
-  inputedLogo: File | null;
-  inputedVideo: File | null;
-  inputedDocument: File | null;
-}
-
-interface inputValueTypes {
-  name: string;
-  description: string;
-  email: string;
-  github: string;
-  social_media: string;
-  community: string;
-  funding_amount: string;
-  equity: string;
-  address: string;
-}
 
 const MakeProposal = () => {
 
     const {root} = useMakeProposalStyles();
-    
-
     const toast = useToast();
-
     const { address } = useAccount();
 
     const storage = new NFTStorage({
@@ -98,8 +77,6 @@ const MakeProposal = () => {
     })
 
     const { approveTokenLoading, approveError, approveSuccess, approveLoading, tokenAuthorization, writeLoading, waitError, waitSuccess, waitLoading } = getApproveData;
-
-
 
     const uploadToIPFS = async () => {
       let metadata;

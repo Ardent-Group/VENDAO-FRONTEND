@@ -15,13 +15,9 @@ interface contestantProps {
     id: number
 }
 
-
-
-
-
 const ContestantTemplate = (props:contestantProps) => {
+    
     const toast = useToast();
-
 
     const [contestant, setContestant] = useState<contestantTypes>({
         name: "",

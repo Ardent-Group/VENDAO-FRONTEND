@@ -24,7 +24,6 @@ const Claim = ({isOpen, onClose, claimId}: any) => {
     ]
   })
 
-
   useEffect(() => {
     let rerun:boolean = true;
 
@@ -55,7 +54,6 @@ const Claim = ({isOpen, onClose, claimId}: any) => {
 
   const handleSubmit = (e:any) => {
     e.preventDefault();
-
     venWrite?.();
   }
 

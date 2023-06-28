@@ -9,7 +9,6 @@ import {Box,
 } from '@chakra-ui/react'
 import Navbar from '../../components/Navbar'
 import ContainerWrapper from '../../components/ContainerWrapper'
-// import { animateScroll as scroll } from 'react-scroll';
 import { motion, useAnimation, useViewportScroll } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { missiondetails } from '../../utils/missions';
@@ -38,8 +37,7 @@ const Home = () => {
     const { address } = useAccount();
     const INVESTOR:`0x${string}` = keccak256(toHex("INVESTOR"));
 
-
-    const { data:venAccessData } = useCallVenAccess({
+    useCallVenAccess({
       functionName: "hasRole",
       args: [
         INVESTOR,
@@ -513,7 +511,6 @@ const Home = () => {
        {/* ------------------------------------FAQ-SECTION--------------------------------- */}
        <Flex {...root2}
        pb="100px"
-       id="faq"
        >
         <ContainerWrapper>
         <Flex justify="center" alignItems="center" flexDir="column" textAlign="center">

@@ -23,9 +23,6 @@ interface projectDataTypes {
     amount_funded: number;
 }
 
-
-
-
 export const FundedTemplate = (props:productProps) => {
 
     const {isOpen, onClose, onOpen} = useDisclosure();
