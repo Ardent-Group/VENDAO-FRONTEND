@@ -1,0 +1,2 @@
+export const projectId = "91123e3eafe4c736a115f6e3f6484a47";
+export const api_keys = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEI4OTFmNGY4NEQwNjY1MGIwOTViNWYzZjgyMUYyMUYyMTU0NjQ3MDciLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY4NzY0NDA4";
