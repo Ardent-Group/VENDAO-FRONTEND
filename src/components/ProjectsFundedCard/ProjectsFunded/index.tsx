@@ -12,6 +12,9 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useNavigate } from 'react-router-dom';
 import Claim from '../../Modals/Claim';
+import useCallVendao from '../../../hooks/contract/useCallVendao';
+import { hexToDecimal } from '../../../hooks/constants/helpers';
+import { FundedTemplate } from '../../FundedTemplate';
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -19,17 +22,46 @@ const fadeIn = {
 };
 
 const ProjectsFunded = () => {
+  const projectFundedLimit = 8;
 
-    const { ref, inView } = useInView({
-        triggerOnce: true,
-    });
-    const {isOpen, onClose, onOpen} = useDisclosure();
-    let navigate = useNavigate();
+  const { ref, inView } = useInView({
+      triggerOnce: true,
+  });
+  const {isOpen, onClose, onOpen} = useDisclosure();
+  let navigate = useNavigate();
 
-    const handleViewMore = () => {
-      navigate('/projects');
-      window.scrollTo(0, 0); // Scroll to top
-    };
+  const handleViewMore = () => {
+    navigate('/projects');
+    window.scrollTo(0, 0); // Scroll to top
+  };
+
+  const { data:getLength }:any = useCallVendao({
+    functionName: "getLength"
+  })
+
+  let getFundedLength:any;
+
+  if(getLength) getFundedLength = hexToDecimal(getLength[2])
+
+
+  const getFundedProjects = () => {
+    if(!getFundedLength) return null;
+
+    const fundedProject:any[] = [];
+
+    let setLimit = Math.abs(getFundedLength - projectFundedLimit);
+    for(let i = getFundedLength - 1; i >= setLimit; i--){
+      fundedProject.push(
+        <FundedTemplate
+          key={i}
+          id={i}
+        />
+      )
+    }
+
+    return fundedProject;
+
+  }
 
   return (
     <Flex flexDir="column">
@@ -37,6 +69,9 @@ const ProjectsFunded = () => {
      ref={ref}
      style={{ opacity: inView ? 1 : 0, transition: "opacity 0.5s" }}    
     >
+      {
+        getFundedProjects()
+      }
     {projectsfundeddetail.map((e: any) => (
      <motion.div
       variants={fadeIn}

@@ -11,6 +11,7 @@ interface ProductListSingleProps {
 }
 
 const Invest:React.FC<ProductListSingleProps> = ({ setSelectedIndex }) => {
+  
   return (
     <Box flex="1" bg="white">
        <Flex flexDir="column">

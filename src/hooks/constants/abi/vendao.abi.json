@@ -1,0 +1,658 @@
+[
+  {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "name": "_paused",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "name": "approved",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "name": "lowerThanFee",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "name": "notAdmin",
+    "type": "error"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "",
+        "type": "uint128"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "",
+        "type": "uint128"
+      }
+    ],
+    "name": "_changeAcceptance",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "_joinDao",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "DAO_FTM_BALANCE",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "FTM_PRICE_FEED",
+    "outputs": [
+      {
+        "internalType": "contract AggregatorV3Interface",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "INVESTOR",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "NOMINATED_ADMINS",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "VenAccessControl",
+    "outputs": [
+      {
+        "internalType": "contract IVenAccessControl",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint48",
+        "name": "_proposalId",
+        "type": "uint48"
+      }
+    ],
+    "name": "claim",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint48",
+        "name": "_proposalId",
+        "type": "uint48"
+      }
+    ],
+    "name": "examineProject",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getLength",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "getProductLength",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "getInvestLength",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "getFundedLength",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IVenAccessTicket",
+        "name": "_accessTicket",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IVenAccessControl",
+        "name": "_accessControl",
+        "type": "address"
+      },
+      {
+        "internalType": "contract ISpookySwap",
+        "name": "_spookyswap",
+        "type": "address"
+      }
+    ],
+    "name": "init",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint48",
+        "name": "_proposalId",
+        "type": "uint48"
+      }
+    ],
+    "name": "invest",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "investorDetails",
+    "outputs": [
+      {
+        "internalType": "uint128",
+        "name": "investmentCount",
+        "type": "uint128"
+      },
+      {
+        "internalType": "uint128",
+        "name": "shareCount",
+        "type": "uint128"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amountSpent",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "joinDAO",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "_newTokenId",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "pauseProposal",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "projectFunded",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "url",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "fundingRequest",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amountFunded",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "equityOffering",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint96",
+        "name": "investorsTag",
+        "type": "uint96"
+      },
+      {
+        "internalType": "address",
+        "name": "proposalCreator",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IERC20",
+        "name": "_tokenCA",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "claimed",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint48",
+        "name": "_proposalId",
+        "type": "uint48"
+      }
+    ],
+    "name": "projectNotSuccessful",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "projectProposals",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "urlToStorage",
+        "type": "string"
+      },
+      {
+        "internalType": "uint40",
+        "name": "proposalValidity",
+        "type": "uint40"
+      },
+      {
+        "internalType": "address",
+        "name": "proposalCreator",
+        "type": "address"
+      },
+      {
+        "internalType": "uint48",
+        "name": "proposalId",
+        "type": "uint48"
+      },
+      {
+        "internalType": "uint8",
+        "name": "approvalCount",
+        "type": "uint8"
+      },
+      {
+        "internalType": "enum Vendao.Status",
+        "name": "status",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint256",
+        "name": "fundingRequest",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "equityOffering",
+        "type": "uint256"
+      },
+      {
+        "internalType": "contract IERC20",
+        "name": "tokenCA",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "proposalTime",
+    "outputs": [
+      {
+        "internalType": "uint40",
+        "name": "",
+        "type": "uint40"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "proposalsToInvest",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "url",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "proposalCreator",
+        "type": "address"
+      },
+      {
+        "internalType": "uint40",
+        "name": "investPeriod",
+        "type": "uint40"
+      },
+      {
+        "internalType": "uint48",
+        "name": "investId",
+        "type": "uint48"
+      },
+      {
+        "internalType": "bool",
+        "name": "funded",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "fundingRequest",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "equityOffering",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amountFunded",
+        "type": "uint256"
+      },
+      {
+        "internalType": "contract IERC20",
+        "name": "_tokenCA",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_urlToStore",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_fundingRequest",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_equityOffering",
+        "type": "uint256"
+      },
+      {
+        "internalType": "contract IERC20",
+        "name": "_contractAddress",
+        "type": "address"
+      }
+    ],
+    "name": "proposeProject",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint48",
+        "name": "_proposalId",
+        "type": "uint48"
+      },
+      {
+        "internalType": "string",
+        "name": "_urlToStore",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_fundingRequest",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_equityOffering",
+        "type": "uint256"
+      }
+    ],
+    "name": "reProposeProject",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint128",
+        "name": "_acceptance",
+        "type": "uint128"
+      }
+    ],
+    "name": "setVar",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "spookySwap",
+    "outputs": [
+      {
+        "internalType": "contract ISpookySwap",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "_token",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "contract AggregatorV3Interface",
+        "name": "_dataFeed",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amountOutMin",
+        "type": "uint256"
+      }
+    ],
+    "name": "takeProfitInFTM",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "_token",
+        "type": "address"
+      },
+      {
+        "internalType": "contract IERC20",
+        "name": "_stable",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "contract AggregatorV3Interface",
+        "name": "_dataFeed",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amountOutMin",
+        "type": "uint256"
+      }
+    ],
+    "name": "takeProfitInStable",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "_tokenAddress",
+        "type": "address"
+      }
+    ],
+    "name": "tokenBalance",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "stateMutability": "payable",
+    "type": "receive"
+  }
+]

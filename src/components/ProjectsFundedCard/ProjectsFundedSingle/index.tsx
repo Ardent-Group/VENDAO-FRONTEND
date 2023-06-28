@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo, memo } from 'react';
 import {
     Button, 
     Flex, 
@@ -14,21 +14,24 @@ import { projectsfundeddetail } from '../../../utils/products'
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import Claim from '../../Modals/Claim';
-
-const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
-};
+import useCallVendao from '../../../hooks/contract/useCallVendao';
+import { hexToDecimal } from '../../../hooks/constants/helpers';
+import { FundedTemplate } from '../../FundedTemplate';
 
 const ProjectsFunded = () => {
 
-    const { ref, inView } = useInView({
-        triggerOnce: true,
-    });
+  const fadeIn = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
 
-    const [currentPage, setCurrentPage] = useState<number>(1);
-    const productsPerPage = 9;
-    const {isOpen, onClose, onOpen} = useDisclosure();
+  const { ref, inView } = useInView({
+      triggerOnce: true,
+  });
+
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const productsPerPage = 9;
+  const {isOpen, onClose, onOpen} = useDisclosure();
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -36,7 +39,38 @@ const ProjectsFunded = () => {
     window.scrollTo(0, 0); 
   };
 
+  const { data:getLength }:any = useCallVendao({
+    functionName: "getLength"
+  })
+
+  let getFundedLength:any;
+
+  if(getLength) getFundedLength = hexToDecimal(getLength[2])
+  
+
   const startIndex = (currentPage - 1) * productsPerPage;
+
+  const visibleProposals = useMemo(() => (startIndex === 0 && getFundedLength > 0) ? (startIndex + productsPerPage) : ((getFundedLength % startIndex) + productsPerPage) , [startIndex, getFundedLength])
+
+  const getFundedProjects = () => {
+    if (!visibleProposals) return null;
+
+    const fundedProject:any[] = [];
+
+    for(let i = visibleProposals - 1; i >= startIndex; i--){
+      fundedProject.push(
+        <FundedTemplate
+         key={i}
+         id={i}
+        />
+      )
+    }
+
+    return fundedProject;
+  }
+  
+
+
   const visibleProjects = projectsfundeddetail.slice(
     startIndex,
     startIndex + productsPerPage
@@ -66,6 +100,9 @@ const ProjectsFunded = () => {
      ref={ref}
      style={{ opacity: inView ? 1 : 0, transition: "opacity 0.5s" }}    
     >
+      {
+        getFundedProjects()
+      }
     {visibleProjects.map((e: any) => (
      <motion.div
       variants={fadeIn}
@@ -180,4 +217,4 @@ const ProjectsFunded = () => {
   )
 }
 
-export default ProjectsFunded
+export default memo(ProjectsFunded);
