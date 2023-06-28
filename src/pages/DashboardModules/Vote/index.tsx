@@ -5,6 +5,7 @@ import {
     Flex,
     HStack,
     Button,
+    useToast, Spinner
   } from '@chakra-ui/react';
 import PopoverWithMouseover from '../../../components/PopoverContent';
 import VoteCard from './VoteCard';
@@ -12,10 +13,6 @@ import useSendVoting from '../../../hooks/contract/useSendVoting';
 import useCallVenVoting from '../../../hooks/contract/useCallVenVoting';
 import { useAccount } from 'wagmi';
 import { hexToDecimal } from '../../../hooks/constants/helpers';
-import { useToast, Spinner } from '@chakra-ui/react';
-
-
-
 
 const Vote = () => {
 
@@ -43,7 +40,6 @@ const Vote = () => {
 
   const handleReset = (e:any) => {
     e.preventDefualt()
-
     votingWrite?.();
   }
 

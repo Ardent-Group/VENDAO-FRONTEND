@@ -32,11 +32,11 @@ const Navbar = () => {
       },
       {
         name: "FAQ",
-        link: "#"
+        link: "/"
       },
       {
         name: "Contact us",
-        link: "#"
+        link: "/"
       }
      
     ]
