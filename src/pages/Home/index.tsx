@@ -49,6 +49,9 @@ const Home = () => {
         const scrollOffset = window.innerHeight * 0.7; 
         if (window.pageYOffset > scrollOffset) {
           controls.start({ opacity: 1, y: 0 });
+        } else if (window.pageYOffset < scrollOffset && window.pageYOffset > 0) {
+          // Adjust the opacity and y position as needed
+          controls.start({ opacity: 0.5, y: 10 });
         } else {
           controls.start({ opacity: 0, y: 20 });
         }
@@ -64,29 +67,30 @@ const Home = () => {
         window.removeEventListener('scroll', handleScrollListener);
       };
     }, [controls]);
-
+    
     const { scrollYProgress } = useViewportScroll();
-
+    
     useEffect(() => {
       const element = document.getElementById('animated-heading');
-  
+    
       const updateOpacity = () => {
         //@ts-ignore
         const scrollPosition = scrollYProgress.current;
         if (element) {
-          element.style.opacity = scrollPosition <= 0.2 ? '1' : '0';
+          // Adjust the opacity threshold as needed
+          element.style.opacity = scrollPosition <= 0.2 ? '1' : '0.5';
         }
       };
-  
+    
       updateOpacity();
-  
+    
       const unsubscribe = scrollYProgress.onChange(updateOpacity);
-  
+    
       return () => {
         unsubscribe();
       };
     }, [scrollYProgress]);
-
+    
     const handleViewProposalpage = () => {
       navigate('/makeaproposal');
       // Scroll to top
@@ -256,12 +260,9 @@ const Home = () => {
        {/* -----------------------------------END-TAG-OF-HERO-SECTION-------------------------*/}
 
         {/* ------------------------------------OUR-MISSION-SECTION-------------------------- */}
-       <Flex {...root}
-         pb="100px"
-       >
+       <Flex {...root} pb="100px">
           <ContainerWrapper>
           <Flex justify="center" alignItems="center" flexDir="column" textAlign="center"  id="about">
-          
         <Box height="10px" /> 
        <AnimatedText
         opacity={0}
