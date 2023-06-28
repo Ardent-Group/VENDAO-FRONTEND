@@ -2,7 +2,7 @@ import { useContractRead } from "wagmi";
 import vendaoABI from "../constants/abi/vendao.abi.json"
 
 
-interface callVendaoProps {
+export interface callVendaoProps {
     functionName: string;
     args?: Array<any>;
     watch?: boolean;

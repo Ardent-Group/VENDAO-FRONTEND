@@ -2,7 +2,7 @@ import { useContractWrite, useWaitForTransaction, usePrepareContractWrite } from
 import { vendaoCA } from "./useCallVendao";
 import vendaoABI from "../constants/abi/vendao.abi.json"
 
-interface sendParamsProps {
+export interface sendParamsProps {
     functionName: string;
     args?: Array<any>;
     value?: bigint
