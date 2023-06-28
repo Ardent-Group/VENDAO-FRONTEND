@@ -27,7 +27,6 @@ const AnimatedButton = motion(Button);
 const AnimatedText = motion(Box);
 
 const Home = () => {
-
     const {root, root2} = useHomeStyles();
     const controls = useAnimation();
     const {isOpen, onClose, onOpen} = useDisclosure();
