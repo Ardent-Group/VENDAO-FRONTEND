@@ -10,13 +10,8 @@ import { vendaoCA } from '../../../hooks/contract/useCallVendao';
 import { useContractRead } from 'wagmi';
 import { useCallback, useEffect, useState } from 'react';
 import { hexToDecimal } from '../../../hooks/constants/helpers';
+import { vaultTypes } from './types';
 
-
-interface vaultTypes {
-  usdt_bal: number;
-  ftm_bal: number;
-  usdc_bal: number;
-}
 
 const DAOVault = () => {
   const USDTCA = "0xAd280B60cA089625E9d38612710301852f879050"
@@ -28,12 +23,11 @@ const DAOVault = () => {
     usdc_bal: 0
   })
 
-
   const { data } = useCallVendao({
     functionName: "DAO_FTM_BALANCE"
   })
 
-  const { data:getUSDT } = useContractRead({
+  const { data: getUSDT } = useContractRead({
     address: USDTCA,
     abi: usdtABI,
     functionName: "balanceOf",
@@ -42,7 +36,7 @@ const DAOVault = () => {
     ]
   })
 
-  const { data:getUSDC } = useContractRead({
+  const { data: getUSDC } = useContractRead({
     address: USDCCA,
     abi: usdcABI,
     functionName: "balanceOf",
@@ -52,6 +46,7 @@ const DAOVault = () => {
   })
 
   const getPrice = async (ids:string) => {
+
     const url = `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`
     const respond = await fetch(url);
     const res = await respond.json();
@@ -60,8 +55,6 @@ const DAOVault = () => {
     return price;
   }
   
-
-
   const vaultData = useCallback(async () => {
     if(data && getUSDT && getUSDC ) {
       const price:any = getPrice("tether");
@@ -72,20 +65,14 @@ const DAOVault = () => {
         usdt_bal: (hexToDecimal(getUSDT) * price),
         ftm_bal: (hexToDecimal(data) * ftmPrice),
         usdc_bal: (hexToDecimal(getUSDC) * usd)
-
       })
     }
   }, [data, getUSDC, getUSDT])
 
   useEffect(() => {
-
     vaultData();
-
   }, [vaultData])
   
-  
-
-
   return (
     <Box flex="1" bg="white">
     <Flex flexDir="column">

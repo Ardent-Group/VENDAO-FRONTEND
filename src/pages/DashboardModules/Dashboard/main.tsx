@@ -8,18 +8,14 @@ import {
 import { useAccount } from 'wagmi';
 import useCallVendao from '../../../hooks/contract/useCallVendao';
 import { hexToDecimal } from '../../../hooks/constants/helpers';
+import { dashboardTypes, transactionSummary } from './types';
 
-
-interface dashboardTypes {
-  projectFunded: number;
-  shareCount: number;
-  amountSpent: number
-}
 
 const Dashboard = () => {
 
   const { address } = useAccount();
   const [dashboard, setdashboard] = useState<dashboardTypes | null >(null);
+  const [transactionSummary, setTransactionSummary] = useState<transactionSummary | null>(null);
 
   const { data:dashboardData }:any = useCallVendao({
     functionName: "investorDetails",
@@ -28,8 +24,6 @@ const Dashboard = () => {
     ]
   })
   
-  
-
   const getDashboardData = useCallback(() => {
     if(!dashboardData) return null;
 
@@ -42,17 +36,31 @@ const Dashboard = () => {
   }, [dashboardData])
 
 
-  
-
   const username = useMemo(() => {
     return `${address?.slice(0, 4)}....${address?.slice(38, 42)}`
   }, [address])
 
   useEffect(() => {
-
     getDashboardData();
-
   }, [getDashboardData])
+
+  //-------- COVALENT API TO GET TRANSACTION SUMMARY -----------------
+  useEffect(() => {
+    const fetchTransactionSummary = async () => {
+      try {
+        const chainName = "fantom-mainnet";
+        const apiKey = `cqt_rQKdFYkBvYbh7WRTdykMQkvbpr9p`;
+        const url = `https://api.covalenthq.com/v1/${chainName}/address/${address}/transactions_summary/?key=${apiKey}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        setTransactionSummary(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchTransactionSummary();
+  }, [address]);
   
 
   return (    
@@ -104,33 +112,31 @@ const Dashboard = () => {
         <Text fontSize="20px" fontFamily="Gopher2" fontWeight={700}>Recent transactions</Text>
      </Flex>
   
-    <Flex mt="7px" mb="20px" gap={5}>
-    <Flex
-      w="100%"
-      h="100%"
-      borderRadius="20px"
-      bg="#F8F8F8"
-      p="20px 40px"
-      // maxH="120px" 
-      // overflowY="scroll"
-      justify="space-between"
-    >
-     <Flex flexDir="column">
-       <Text color="#404040">Name</Text>
-       <HStack mt="5px">
-        <Text color="#404040">1.</Text>
-        <Text color="#404040">Blessing DAO</Text>
-      </HStack> 
-     </Flex>
+     <Flex mt="7px" mb="20px" gap={5}>
+      {transactionSummary && (
+        <Flex
+          w="100%"
+          h="100%"
+          borderRadius="20px"
+          bg="#F8F8F8"
+          p="20px 40px"
+          justify="space-between"
+        >
+          <Flex flexDir="column">
+            <Text color="#404040">Total Transactions</Text>
+            <HStack mt="5px">
+              <Text color="#404040">{transactionSummary.total_transactions}</Text>
+            </HStack>
+          </Flex>
 
-
-      <Flex flexDir="column">
-       <Text color="#404040">Amount</Text>
-       <HStack mt="5px">
-        <Text color="#404040">$556</Text>
-      </HStack> 
-     </Flex>
-    </Flex>
+          <Flex flexDir="column">
+            <Text color="#404040">Total Value</Text>
+            <HStack mt="5px">
+              <Text color="#404040">{transactionSummary.total_value}</Text>
+            </HStack>
+          </Flex>
+        </Flex>
+      )}
     </Flex>
     </Flex>
     

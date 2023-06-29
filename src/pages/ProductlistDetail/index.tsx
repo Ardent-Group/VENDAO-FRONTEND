@@ -98,45 +98,7 @@ const ProjectListDetail = () => {
     const {root} = useProductListStyles();
     let navigate = useNavigate();
 
-    const getStatusColor = (status: any) => {
-      switch (status) {
-        case "approved":
-          return "#D9FFD6";
-        case "rejected":
-          return "#FFD6D6";
-        case "pending":
-          return "#FEFFD6";
-        default:
-          return "gray";
-      }
-    };
   
-    const getStatusColorText = (status: any) => {
-      switch (status) {
-        case "approved":
-          return "#4CDC3F";
-        case "rejected":
-          return "#F42C2C";
-        case "pending":
-          return "#D1D600";
-        default:
-          return "black";
-      }
-    };
-    
-    const getStatusLabel = (status: any) => {
-      switch (status) {
-        case "approved":
-          return "Approved";
-        case "rejected":
-          return "Rejected";
-        case "pending":
-          return "Pending";
-        default:
-          return "Unknown";
-      }
-    };
-
     const detail: ProductDetail | undefined = productsDetail.find((item: ProductDetail) => item.id === `${item.id}`);
 
     if (!detail) {

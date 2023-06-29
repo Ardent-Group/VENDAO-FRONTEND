@@ -22,5 +22,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-#global variable
-global_variables.ts
+# #global variable
+# global_variables.ts

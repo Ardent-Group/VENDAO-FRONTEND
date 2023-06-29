@@ -20,7 +20,7 @@ const useCallVendao = ({functionName, args, watch}: callVendaoProps) => {
         args,
         watch,
         onError: (err) => {
-            console.log({ err })
+           console.log({ err })
         }
     })
 
