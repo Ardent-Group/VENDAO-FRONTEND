@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useMemo, useState} from 'react'
 import {
     Button, 
     Flex, 
@@ -7,6 +7,9 @@ import {
     HStack
   } from '@chakra-ui/react'
  import { VENDAO_SVG } from '../../../../assets/svg';
+import useCallVenVoting from '../../../../hooks/contract/useCallVenVoting';
+import { hexToDecimal } from '../../../../hooks/constants/helpers';
+import ContestantTemplate from '../../../../components/ContestantTemplate';
 
 const VoteCard = () => {
 
@@ -29,39 +32,68 @@ const VoteCard = () => {
 
     ]
 
+    const { data:getLength }:any = useCallVenVoting({
+      functionName: "contestantLength"
+    })
+
+    let getContestantLength:any;
+    if(getLength) getContestantLength = hexToDecimal(getLength[0])
+
+    const startIndex = (currentPage - 1) * votesPerPage;
+    const visibleContestant = useMemo(() => (startIndex === 0 && getContestantLength > 0) ? (startIndex + votesPerPage) : ((getContestantLength % startIndex) + votesPerPage), [startIndex, getContestantLength])
+    const visibleVotes = votelists.slice(
+      startIndex,
+      startIndex + votesPerPage
+    );
+  
+
     const handlePageChange = (page: number) => {
-        setCurrentPage(page);
-        // Scroll back to top
+      setCurrentPage(page);
+      // Scroll back to top
+      window.scrollTo(0, 0); 
+    };
+  
+    const handlePrevPage = () => {
+      if (currentPage > 1) {
+        setCurrentPage(currentPage - 1);
+          // Scroll back to top
         window.scrollTo(0, 0); 
-      };
+      }
+    };
+  
+    const handleNextPage = () => {
+      if (currentPage < totalPages) {
+        setCurrentPage(currentPage + 1);
+          // Scroll back to top
+        window.scrollTo(0, 0); 
+      }
+    };
     
-      const startIndex = (currentPage - 1) * votesPerPage;
-      const visibleVotes = votelists.slice(
-        startIndex,
-        startIndex + votesPerPage
-      );
-    
-      const handlePrevPage = () => {
-        if (currentPage > 1) {
-          setCurrentPage(currentPage - 1);
-           // Scroll back to top
-          window.scrollTo(0, 0); 
-        }
-      };
-    
-      const handleNextPage = () => {
-        if (currentPage < totalPages) {
-          setCurrentPage(currentPage + 1);
-           // Scroll back to top
-          window.scrollTo(0, 0); 
-        }
-      };
-    
-      const totalPages = Math.ceil(votelists.length / votesPerPage);
+    const totalPages = Math.ceil(votelists.length / votesPerPage);
+
+    const getContestantData = () => {
+      if(!visibleContestant) return null;
+
+      const contestantList:any[] = [];
+
+      for(let i = visibleContestant - 1; i >= startIndex; i--){
+        contestantList.push(
+          <ContestantTemplate
+          key={i}
+          id={i}
+          />
+        )
+      }
+
+      return contestantList;
+    }
 
   return (
     <Flex flexDir="column" mt="20px">
      <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing={5}>
+      {
+        getContestantData()
+      }
      {visibleVotes.map((e: any) => (
      <Flex
         border="0.5px solid #CFCFCF"

@@ -17,6 +17,9 @@ import { useCallback, useEffect, useState } from 'react'
 import { hexToDecimal, makeUrl } from '../../hooks/constants/helpers'
 import ReactPlayer from 'react-player'
 import { getStatusColor, getStatusColorText, getStatusLabel } from '../../hooks/constants/helpers'
+import { keccak256, toHex } from 'viem'
+import useCallVenAccess from '../../hooks/contract/useCallVenAccess'
+import { useAccount } from 'wagmi'
 
 
 interface proposalsTypes {
@@ -28,6 +31,7 @@ interface proposalsTypes {
   document: any;
   equity_offered: number;
   funding_request: number;
+  approval_count: number;
 }
 
 const ProjectListDetail = () => {
@@ -40,10 +44,22 @@ const ProjectListDetail = () => {
     video: "",
     document: "",
     equity_offered: 0,
-    funding_request: 0
+    funding_request: 0,
+    approval_count: 0
   })
 
   const {id} = useParams()
+  const { address } = useAccount();
+
+  const NOMINATED_ADMINS: `0x${string}` = keccak256(toHex("NOMINATED_ADMINS"));
+
+  const { data:venAccessRole }:any = useCallVenAccess({
+    functionName: "hasRole",
+    args: [
+      NOMINATED_ADMINS,
+      address
+    ]
+  })
 
   const {data}:any = useCallVendao({
     functionName: "projectProposals",
@@ -51,6 +67,7 @@ const ProjectListDetail = () => {
       id
     ]
   })
+  
 
   const getProjectData = useCallback(async () => {
     if(data){
@@ -66,7 +83,8 @@ const ProjectListDetail = () => {
         document: makeUrl(metadata.properties.inputedDocument),
         description: metadata.description,
         equity_offered: hexToDecimal(data[7]?._hex),
-        funding_request: hexToDecimal(data[6]?._hex)
+        funding_request: hexToDecimal(data[6]?._hex),
+        approval_count: hexToDecimal(data[4]?._hex)
       })
 
     }
@@ -136,8 +154,9 @@ const ProjectListDetail = () => {
      >
       <ContainerWrapper>
       <Flex justify="start" flexDir="column">
-       
-       <HStack cursor="pointer"
+      <HStack justifyContent={"space-between"}>
+       <HStack 
+        cursor="pointer"
         onClick={() => navigate(-1)}
        >
         <Flex border="1px dashed">
@@ -145,6 +164,29 @@ const ProjectListDetail = () => {
         </Flex>
         <Text fontSize="16px">Back</Text>
        </HStack>
+       <HStack>
+        {
+          venAccessRole && 
+          <Button
+          borderRadius={"10px"}
+          border={"1px solid #B5FF45"}
+          bg={"transparent"}
+          w={"146px"}
+          h={"40px"}
+          p={"10px 16px"}
+          _hover={{
+            bg: "rgb(212, 212, 212, 0.2)"
+          }}
+          >
+            Approve
+          </Button>
+        }
+        <HStack fontWeight={"bold"}>
+          <Text>Approval Count:</Text>
+          <Text>{proposals.approval_count}</Text>
+        </HStack>
+       </HStack>
+      </HStack>
 
       <HStack gap={10} mt="30px">
         <Flex>
@@ -200,17 +242,26 @@ const ProjectListDetail = () => {
           >
             {proposals.description}
           </Text>
+          <Flex justifyContent={"space-between"} pr={12}>
+              <Box>
+                <Text color="#404040" fontWeight="500" fontSize="16px" mt="24px">Equity offered</Text>
 
-          <Text color="#404040" fontWeight="500" fontSize="16px" mt="24px">Equity offered</Text>
+                <Text fontSize="48px" fontWeight={700} color="#171717" mt="4px">{proposals.equity_offered}</Text>
+              </Box>
+              <Box>
+                <Text color="#404040" fontWeight="500" fontSize="16px" mt="24px">Funding Request</Text>
 
-          <Text fontSize="48px" fontWeight={700} color="#171717" mt="4px">{detail.equityOffered}</Text>
+                <Text fontSize="48px" fontWeight={700} color="#171717" mt="4px">{proposals.funding_request}</Text>
+              </Box>
+            </Flex>
+          </Flex>
         </Flex>
         </> */}
 
         <>
         {detail && (
         <Flex flexDir="column" flex="1 1">
-           <HStack gap={20}>
+           <HStack justifyContent={"space-between"} pr={12}>
          
             <Flex gap={10}>
              <Text color="#171717" fontFamily="Gopher" fontSize="48px" fontWeight="700">{detail.name}</Text>
@@ -235,14 +286,22 @@ const ProjectListDetail = () => {
            fontWeight="700"
            lineHeight="20px"
            mt="20px"
-           maxW="600px"
+           maxW={"700px"}
           >
           {detail.description}
           </Text>
+          <Flex justifyContent={"space-between"} pr={12}>
+            <Box>
+              <Text color="#404040" fontWeight="500" fontSize="16px" mt="24px">Equity offered</Text>
 
-          <Text color="#404040" fontWeight="500" fontSize="16px" mt="24px">Equity offered</Text>
+              <Text fontSize="48px" fontWeight={700} color="#171717" mt="4px">{detail.equityOffered}</Text>
+            </Box>
+            <Box>
+              <Text color="#404040" fontWeight="500" fontSize="16px" mt="24px">Funding Request</Text>
 
-          <Text fontSize="48px" fontWeight={700} color="#171717" mt="4px">{detail.equityOffered}</Text>
+              <Text fontSize="48px" fontWeight={700} color="#171717" mt="4px">{detail.equityOffered}</Text>
+            </Box>
+          </Flex>
         </Flex>
         )}
         </>

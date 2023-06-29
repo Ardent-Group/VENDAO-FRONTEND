@@ -42,7 +42,7 @@ const Vote = () => {
   })
 
   const handleReset = (e:any) => {
-    e.preventDefualt()
+    e.preventDefault()
 
     votingWrite?.();
   }
