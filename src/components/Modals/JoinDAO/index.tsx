@@ -24,7 +24,7 @@ const JoinDAO = ({isOpen, onClose}: any) => {
 
   const toast = useToast();
 
-  const DAO_FEE = parseEther("1");
+  const DAO_FEE = parseEther("2");
 
   const { venWrite, venLoading, waitError, waitSuccess, waitLoading } = useSendVendao({
     functionName: "joinDAO",
