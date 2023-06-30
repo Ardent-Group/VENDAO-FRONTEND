@@ -36,7 +36,7 @@ const Home = () => {
     const { address } = useAccount();
     const INVESTOR:`0x${string}` = keccak256(toHex("INVESTOR"));
 
-    useCallVenAccess({
+    const {data:investor} = useCallVenAccess({
       functionName: "hasRole",
       args: [
         INVESTOR,
@@ -175,7 +175,7 @@ const Home = () => {
               address ?
               <HStack gap="6" pt="32px">
                 {
-                  true ?
+                  investor ?
                   <AnimatedButton
                     bg="#B5FF45"
                     borderRadius="10px"
@@ -529,6 +529,7 @@ const Home = () => {
           lineHeight="60.48px"
           fontFamily="Gopher2"
           mb="40px"
+          id='faq'
           >
            FAQs
         </Text>
@@ -545,7 +546,6 @@ const Home = () => {
 
        <Flex {...root2}
         pb="100px"
-        id="contactUs"
        >
          <ContainerWrapper>
         <Flex justify="center" alignItems="center" flexDir="column" textAlign="center">
@@ -565,6 +565,7 @@ const Home = () => {
           fontFamily="Gopher2"
           mb="40px"
           maxW="400px"
+          id="contactUs"
           >
           Any question?
           We got you

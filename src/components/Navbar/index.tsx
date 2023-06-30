@@ -29,14 +29,6 @@ const Navbar = () => {
       {
         name: "Make proposal",
         link: "/makeaproposal"
-      },
-      {
-        name: "FAQ",
-        link: "/"
-      },
-      {
-        name: "Contact us",
-        link: "/"
       }
      
     ]
@@ -93,6 +85,32 @@ const Navbar = () => {
                 </HStack>
               </Link>
              ))}
+              <a href='/#faq'>
+                <HStack
+                px="10px"
+                py="5px"
+                borderRadius={"50px"}
+                >
+                  <Text fontSize="16px" fontWeight={500}
+                   _hover={{ color: "#696969" }}
+                   >
+                    FAQ
+                  </Text>
+                </HStack>
+              </a>
+              <a href='/#contactUs'>
+                <HStack
+                px="10px"
+                py="5px"
+                borderRadius={"50px"}
+                >
+                  <Text fontSize="16px" fontWeight={500}
+                   _hover={{ color: "#696969" }}
+                   >
+                    Contact Us
+                  </Text>
+                </HStack>
+              </a>
             </HStack>
 
             <HStack>

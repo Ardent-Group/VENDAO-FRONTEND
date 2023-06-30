@@ -42,7 +42,7 @@ const ProposalTemplate = (props:proposalProps) => {
     const { data }:any = useCallVendao({
         functionName: "projectProposals",
         args: [
-            props.id
+            props.id.toString()
         ]
     })
 

@@ -2,7 +2,8 @@ import { useContractRead } from 'wagmi';
 import venAccessABI from "../constants/abi/venAccess.abi.json"
 import { callVendaoProps } from './useCallVendao';
 
-export const venAccessCA = "0x56B94B906605635Fe3fB2e4F5b88737B40ad9Ef7";
+
+export const venAccessCA = "0x48fb4A83c7328c63C6eb8500e1293A05E94d4746";
 
 const useCallVenAccess = ({functionName, args, watch}: callVendaoProps) => {
 
