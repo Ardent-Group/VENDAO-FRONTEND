@@ -1,59 +1,90 @@
-This project was bootstrapped with
-[Create React App](https://github.com/facebook/create-react-app).
+# VEN DAO WEBSITE: https://vendao.vercel.app/
+# VEN DAO VIDEO DEMO: 
 
-## Available Scripts
+# VEN DAO DOCUMENTATION  
+This documentation covers the inspiration, purpose, and functionality of Ven DAO.  
 
-In the project directory, you can run:
+- [Introduction](#introduction)  
+- [Inspiration](#inspiration)  
+- [Tech Stack](#tech-stack)
+    - [Tech Implementation](#tech-implememtation)  
+- [Functionality](#functionality)  
+- [Development Goals](#development-goals)  
 
-### `yarn start`
+## Introduction  
+Ven DAO is a Venture Capitalist Decentralized Organization built with the aim of supporting DeFi, DAO, and NFT projects in reshaping various sectors and drive innovation across industries through the investments.  
+While we acknowledge the significance of all these technologies, we built Ven DAO with our primary focus being on advancing the rapidly evolving realm of **Regenerative Finance (ReFi)** by investing in blockchain based ReFi projects.  
+ReFi combines the principles of regenerative economics and sustainable finance. It aims to transform financial systems and practices by supporting the regeneration of social, ecological, and economic wellbeing. By the innovative fusion of traditional finance and decentralized finance, ReFi creates a seamless bridge between the two worlds.  
 
-Runs the app in the development mode.<br /> Open
-[http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Inspiration  
+Recently, it has been clear that blockchain technology has the potential to be used to develop ReFi. The social, environmental, and economical benefits of numerous ReFi projects have already been established. For many reasons, most notably a lack of funding, there are still a lot more ReFi-based ideas that need to be developed. Same goes for DAO, NFT, and DeFi based ideas. Our drive to participate in the financial advancement of further cutting-edge concepts, particularly ReFi concepts, motivated us to develop Ven DAO. With Ven DAO, we have a venture capitalist organization that facilitates the development of more blockchain based projects that will have the most impact across various sectors, whilst being profiting for investors.
 
-The page will reload if you make edits.<br /> You will also see any lint errors
-in the console.
+## Tech Stack  
+Ven DAO was built with the following:  
+[Solidity](https://soliditylang.org)  
+[Hardhat](https://hardhat.org/)   
+[React](https://react.dev)  
+[Chakra-UI](https://chakra-ui.com/)  
+[TypeScript](https://www.typescriptlang.org)  
+[InterPlanetary File System (IPFS)](https://ipfs.tech)  
+[AWS Amplify](https://aws.amazon.com/amplify/)  
+[Covalent API](https://www.covalenthq.com/docs/api/)  
+[ChainLink](https://docs.chain.link/data-feeds/price-feeds)  
 
-### `yarn test`
+### Tech Implememtation  
+- **Solidity**  
+Solidity is the programming language used to write the smart cintract code for Ven DAO. The smart contract forms the foundation of all of Ven DAO's operations. Ven DAO smart contract can be found [here](https://github.com/Ardent-Group/VENDAO/tree/main/contracts).  
 
-Launches the test runner in the interactive watch mode.<br /> See the section
-about
-[running tests](https://facebook.github.io/create-react-app/docs/running-tests)
-for more information.
+- **React**  
+React is the JavaScript framework used to write the frontend code for Ven DAO. Users can interact with Ven DAO through the frontend interface. The frontend code can be found [here](https://github.com/Ardent-Group/VENDAO-FRONTEND).  
 
-### `yarn build`
+- **Chakra-UI**  
+Ven DAO frontend was designed using the CSS  framework, Chakra-ui.
 
-Builds the app for production to the `build` folder.<br /> It correctly bundles
-React in production mode and optimizes the build for the best performance.
+- **TypeScript**  
+Along with React, TypeScript was also used in the frontend development of Ven DAO.  
 
-The build is minified and the filenames include the hashes.<br /> Your app is
-ready to be deployed!
+- **IPFS**  
+Project information (images, documents, videos) sent along with proposals by those seeking funding on Ven DAO are stored on IPFS.  
 
-See the section about
-[deployment](https://facebook.github.io/create-react-app/docs/deployment) for
-more information.
+- **AWS Amplify**  
+AWS Amplify is used to host the Dapp website. It can be found [here]()
 
-### `yarn eject`
+- **Covalent API**  
+The covalent API is used to get latest transactions perfomed by members of Ven DAO.  
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- **ChainLink**  
+ChainLink Price Feeds is used to get current price data of cryptocurrencies used on Ven DAO. Along with ChainLink price feed, price information is also gotten from **[SpookySwap](https://spooky.fi/#/swap)**, a Decentralized Exchange on Fantom blockchain. Using the SpookySwap exchange function, crypto exchange can happen on Ven DAO. 
 
-If you aren’t satisfied with the build tool and configuration choices, you can
-`eject` at any time. This command will remove the single build dependency from
-your project.
+## Functionality  
+In this section, we will be going through the various features and functions on Ven DAO.  
 
-Instead, it will copy all the configuration files and the transitive
-dependencies (webpack, Babel, ESLint, etc) right into your project so you have
-full control over them. All of the commands except `eject` will still work, but
-they will point to the copied scripts so you can tweak them. At this point
-you’re on your own.
+- **JOINING VEN DAO**  
+Ven DAO is open to all interested investors who fulfil the requirements to join Ven DAO. The major requirement set is having the stipulated amount of [FTM](https://coinmarketcap.com/currencies/fantom/) required to be deposited upon joining the DAO. On joining the DAO, an `accessibiltiy NFT` is minted to the new member's address and the address is awarded the `Investor` role.  The Investor role allows members the right to vote and invest in projects.  
 
-You don’t have to ever use `eject`. The curated feature set is suitable for
-small and middle deployments, and you shouldn’t feel obligated to use this
-feature. However we understand that this tool wouldn’t be useful if you couldn’t
-customize it when you are ready for it.
+- **MAKING PROPOSALS**  
+Making proposals to Ven DAO involves submitting details of the project, contact email, amount needed to fund the project, and a document stating the equity offering to investors. 
+On submitting the proposal to the DAO, investors and `Nominated Admins` will review the documents submitted to evaluate the viabiltiy of the project. Investing in a project will only happen when investors are satisfied with the proposal, project viability, and equity offering.  
 
-## Learn More
+- **ACCESS CONTROL**  
+Access to functions on the DAO are limited to `roles` assigned to each meember. There are three (3) roles on Ven DAO:  
+    `INVESTOR`  
+    `NOMINATED ADMIN`  
+    `ADMIN`  
 
-You can learn more in the
-[Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    1. Investor:  
+    The Investor role is assigned to every member on joining the DAO. This role allows members invest in proposed projects that pass viability evaluation, claim yields on investments, vote, and be voted for.  
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    2. Nominated Admin:  
+    Nominated Admins are voted by other DAO members to review proposals that are presented to the DAO. Following the successful funding of approved projects, the nominated admins will earn incentives.
+  
+
+    3. Admin:  
+    Admins are members of the DAO tasked with overseeing the running and activities on the DAO.  
+
+- **VEN DAO VOTING**  
+When new Nominated Admins are to be elected, members of the DAO will be required to vote in preferred members to handle the responsibilities of that position. There can only be 10 members contesting and the four with the highest votes will be assigned the role.  
+
+## Development Goals  
+We are prepared to drive Ven DAO through the process leading up to an official launch, taking into account the necessity to get new projects on board and develop the blockchain ecosystem as well as our dedication to this direction. Building communities, launching on testnet, receiving community feedback, implementing feedback, and auditing smart contracts are a few of those things involved in getting Ven fully launched.  
+We are sure that Ven DAO will be the venture capital platform that makes a significant contribution to the development of the DeFi, ReFi, NFT, and DAO worlds and seeing greater impact  .
