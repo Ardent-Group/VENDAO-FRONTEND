@@ -22,7 +22,7 @@ const useSendVendao = ({functionName, args, value}: sendParamsProps) => {
 
     // Write to the smart contract using the prepared config
 
-    const {data:venData, isLoading:venLoading, write: venWrite} = useContractWrite(config);
+    const {data:venData, isLoading:venLoading, write:venWrite} = useContractWrite(config);
 
     const {isError:waitError, isSuccess:waitSuccess, isLoading:waitLoading} = useWaitForTransaction({
         hash: venData?.hash

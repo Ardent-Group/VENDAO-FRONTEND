@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState, memo, ChangeEvent, useEffect } from 'react';
 import {Box, 
     Button, 
@@ -20,142 +21,200 @@ import { motion } from 'framer-motion'
 import { useDebounce } from 'use-debounce';
 import { NFTStorage } from 'nft.storage';
 import { api_keys } from '../../global_variables';
-import { useApproveToken } from '../../hooks/contract/useApproveToken';
 import { useAccount } from 'wagmi';
 import { inputFileTypes, inputValueTypes } from './types';
+import { parseEther } from 'viem';
+import { useContractRead } from 'wagmi';
+import tokenABI from "../../hooks/constants/abi/erc20.abi.json";
+import vendaoABI from "../../hooks/constants/abi/vendao.abi.json";
+import { vendaoCA } from '../../hooks/contract/useCallVendao';
+import { useNavigate } from 'react-router-dom';
+import { useContractWrite } from 'wagmi';
+import { useWaitForTransaction } from 'wagmi';
 
 const AnimatedButton = motion(Button);
 
+
 const MakeProposal = () => {
+  const navigate = useNavigate()
 
-    const {root} = useMakeProposalStyles();
-    const toast = useToast();
-    const { address } = useAccount();
+  const {root} = useMakeProposalStyles();
 
-    const storage = new NFTStorage({
-      token: api_keys
-    })
+  const toast = useToast();
+  const { address } = useAccount();
 
-    const [inputFile, setInputFile] = useState<inputFileTypes>({
-      inputedLogo: null,
-      inputedVideo: null,
-      inputedDocument: null
-    })
-    
-    const [inputValue, setInputValue] = useState<inputValueTypes>({
-      name: "",
-      description: "",
-      email: "",
-      github: "",
-      social_media: "",
-      community: "",
-      funding_amount: "",
-      equity: "",
-      address: ""
-    })
+  const storage = new NFTStorage({
+    token: api_keys
+  })
 
-    const [url, setUrl] = useState<string>("")
+  const [inputFile, setInputFile] = useState<inputFileTypes>({
+    inputedLogo: null,
+    inputedVideo: null,
+    inputedDocument: null
+  })
+  
+  const [inputValue, setInputValue] = useState<inputValueTypes>({
+    name: "",
+    description: "",
+    email: "",
+    github: "",
+    social_media: "",
+    community: "",
+    funding_amount: "",
+    equity: "",
+    address: ""
+  })
 
-    console.log(url, "ipfs url");
-    
+  const [url, setUrl] = useState<string>("")
 
-    const [value] = useDebounce(inputValue, 1000);
+  const [upload, setUpload] = useState<boolean>(false)
 
-    const getApproveData = useApproveToken({
-      functionName: "proposeProject",
-      // @ts-ignore
-      equityCA: inputValue.address,
-      // @ts-ignore
-      price: inputValue.equity,
+  const [value] = useDebounce(inputValue, 1000);
+
+  const {data:vendata, isLoading:venLoading, write:venWrite} = useContractWrite({
+    mode: "recklesslyUnprepared",
+    address: vendaoCA,
+    abi: vendaoABI,
+    functionName: "proposeProject",
+    args: [
+      url,
+      parseEther(value.funding_amount),
+      parseEther(value.equity),
+      value.address
+    ]
+  })
+  const { isError:waitError, isLoading:waitLoading, isSuccess:waitSuccess } = useWaitForTransaction({
+    hash: vendata?.hash,
+  })
+
+  const {data, isLoading:approveTokenLoading, write:tokenWrite} = useContractWrite({
+    mode: "recklesslyUnprepared",
+    address: value.address,
+    abi: tokenABI,
+    functionName: "approve",
+    args: [
+      vendaoCA,
+      parseEther(value.equity)
+    ]
+  })
+  const {isError:approveError, isLoading:approveLoading } = useWaitForTransaction({
+    hash: data?.hash,
+    onSuccess(){
+      venWrite?.()
+    }
+  })
+
+
+  const { data:tokenRead } = useContractRead({
+    address: value.address,
+    abi: tokenABI,
+    functionName: "allowance",
+    args: [
       address,
-      contractArgs: [
-        url,
-        value.funding_amount,
-        value.equity,
-        value.address
-      ]
+      vendaoCA
+    ]
+  })
+  
+  
+
+  const tokenAuthorization = () => {
+    setUpload(false)
+    const priceInput = parseEther(value.equity)
+    if(Number(tokenRead) > Number(priceInput)) {
+      venWrite?.();
+    } else {
+      tokenWrite?.();
+    }
+  }
+
+  const uploadToIPFS = async () => {
+    setUpload(true);
+    let metadata;
+
+
+    metadata = await storage.store({
+      name: inputValue.name,
+      description: inputValue.description,
+      // @ts-ignore
+      image: inputFile.inputedLogo,
+      properties: {
+        email: inputValue.email,
+        github: inputValue.github,
+        social_media: inputValue.social_media,
+        community: inputValue.community,
+        inputedVideo: inputFile.inputedVideo,
+        inputedDocument: inputFile.inputedDocument
+      }
     })
 
-    const { approveTokenLoading, approveError, approveSuccess, approveLoading, tokenAuthorization, writeLoading, waitError, waitSuccess, waitLoading } = getApproveData;
+    setUrl(metadata.url)
+    if(metadata.url) tokenAuthorization();
 
-    const uploadToIPFS = async () => {
-      let metadata;
+  }
 
-      metadata = await storage.store({
-        name: inputValue.name,
-        description: inputValue.description,
-        // @ts-ignore
-        image: inputFile.inputedLogo,
-        properties: {
-          email: inputValue.email,
-          github: inputValue.github,
-          social_media: inputValue.social_media,
-          community: inputValue.community,
-          inputedVideo: inputFile.inputedVideo,
-          inputedDocument: inputFile.inputedDocument
-        }
+  useEffect(() => {
+    let rerun:boolean = true;
+
+    if((approveError || waitError) && rerun) {
+      toast({
+        title: "Error",
+        description: "Error proposing a project",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top"
+      })
+    }
+
+    if(waitSuccess && rerun) {
+      toast({
+        title: "Successful",
+        description: "You have succesfully proposed a project",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top"
       })
 
-      setUrl(metadata.url)
-      if(metadata.url) tokenAuthorization();
-
+      setTimeout(
+        navigate("/"),
+        5000
+      )
+    }
+  
+    return () => {
+      rerun = false;
     }
 
-    useEffect(() => {
-      let rerun:boolean = true;
+  }, [approveError, waitError, toast, waitSuccess, navigate])
+  
+  
+  
 
-      if((approveError || waitError) && rerun) {
-        toast({
-          title: "Error",
-          description: "Error proposing a project",
-          status: "error",
-          duration: 5000,
-          isClosable: true
-        })
-      }
+  // --------------------- UPLOAD File Functionality -------------------------------    
 
-      if((approveSuccess || waitSuccess) && rerun) {
-        toast({
-          title: "Successful",
-          description: "You have succesfully proposed a project",
-          status: "success",
-          duration: 5000,
-          isClosable: true
-        })
-      }
-    
-      return () => {
-        rerun = false;
-      }
-    }, [approveError, waitError, approveSuccess, waitSuccess, toast])
-    
-    
-    
+  const handleFileInput = (event:ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
 
-    // --------------------- UPLOAD File Functionality -------------------------------    
+    setInputFile({...inputFile, [event.target.name]: file})
+  }
 
-    const handleFileInput = (event:ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0];
+  const handleFileClick = (name:string) => {
+    const fileInput = document.querySelector(`input[name=${name}]`) as HTMLInputElement
+    fileInput?.click();
+  }
 
-      setInputFile({...inputFile, [event.target.name]: file})
-    }
+  // --------------------- Input file functionality ------------------------------
 
-    const handleFileClick = (name:string) => {
-      const fileInput = document.querySelector(`input[name=${name}]`) as HTMLInputElement
-      fileInput?.click();
-    }
+  const handleChange = (e:any) => {
+    setInputValue({...inputValue, [e.target.name]: e.target.value})
+  }
 
-    // --------------------- Input file functionality ------------------------------
+  const handleSubmit = (e:any) => {
+    e.preventDefault();
 
-    const handleChange = (e:any) => {
-      setInputValue({...inputValue, [e.target.name]: e.target.value})
-    }
-
-    const handleSubmit = (e:any) => {
-      e.preventDefault();
-
-      uploadToIPFS()
-    }
+    uploadToIPFS()
+  }
 
   return (
     <Box>
@@ -489,12 +548,12 @@ const MakeProposal = () => {
              animate={{ opacity: 1, y: 0 }}
              transition={{ duration: 0.6 }}
              type="submit"
-             disabled={approveTokenLoading || approveLoading || writeLoading || waitLoading}
+             disabled={approveTokenLoading || approveLoading || venLoading || waitLoading}
             >
               {
-                (approveTokenLoading || approveLoading || writeLoading || waitLoading) ?
+                (approveTokenLoading || approveLoading || venLoading || waitLoading) ?
                 <>Loading <Spinner ml={"10px"} size={"sm"} /></>:
-                <>Submit proposal</>
+                <>{upload ? <>Uploading <Spinner ml={"10px"} size={"sm"} /></>: "Submit proposal"}</>
               }
             </AnimatedButton>
             

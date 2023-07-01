@@ -2,7 +2,7 @@ import Navbar from '../../components/Navbar'
 import ContainerWrapper from '../../components/ContainerWrapper'
 import Footer from '../../components/Footer'
 import { VENDAO_SVG } from '../../assets/svg'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {ProductDetail, productsDetail} from '../../utils/products'
 import { useParams } from 'react-router-dom'
 import {Box, 
@@ -10,11 +10,12 @@ import {Box,
   Flex, 
   HStack, 
   Text,
-  Image
+  Image,
+  VStack
 } from '@chakra-ui/react'
 import useCallVendao from '../../hooks/contract/useCallVendao'
 import { useCallback, useEffect, useState } from 'react'
-import { hexToDecimal, makeUrl } from '../../hooks/constants/helpers'
+import { makeUrl } from '../../hooks/constants/helpers'
 import ReactPlayer from 'react-player'
 import { getStatusColor, getStatusColorText, getStatusLabel } from '../../hooks/constants/helpers'
 import { keccak256, toHex } from 'viem'
@@ -76,15 +77,15 @@ const ProjectListDetail = () => {
       const metadata = await respond.json();
 
       setProposals({
-        status: hexToDecimal(data[5]?._hex),
+        status: Number(data[5]),
         name: metadata.name,
         logo: makeUrl(metadata.image),
         video: makeUrl(metadata.properties.inputedVideo),
         document: makeUrl(metadata.properties.inputedDocument),
         description: metadata.description,
-        equity_offered: hexToDecimal(data[7]?._hex),
-        funding_request: hexToDecimal(data[6]?._hex),
-        approval_count: hexToDecimal(data[4]?._hex)
+        equity_offered: Number(data[7]) / 1e18,
+        funding_request: Number(data[6]) / 1e18,
+        approval_count: Number(data[4])
       })
 
     }
@@ -154,12 +155,37 @@ const ProjectListDetail = () => {
         <Flex>
           {
             proposals.video ?
-            <ReactPlayer
+            <VStack>
+              <ReactPlayer
               url={proposals.video} 
               controls 
               width={"400px"} 
               height={"400px"}
-            /> :
+              />
+              <Box
+               mt={4}
+               width={"100%"}
+              >
+                <Link
+                  to={proposals.document}
+                  download={"proposal_document_VENDAO"}
+                  target='_blank'
+                  rel='noreferrer'
+                >
+                  <Button
+                    width={"100%"}
+                    bg={"transparent"}
+                    border="2px solid #B5FF45"
+                    p="10px 16px"
+                    _hover={{
+                      bg:"#B5FF45"
+                    }}
+                  >
+                    Proposal Document
+                  </Button>
+                </Link>
+              </Box>
+            </VStack> :
             <Flex
             flex="1 1"
             w="400px"
@@ -171,15 +197,13 @@ const ProjectListDetail = () => {
               <Text p="12px">Video</Text>
             </Flex>
           }
-          
-          
         </Flex> 
-        {/* <>
+        <>
         <Flex flexDir="column" flex="1 1">
           <HStack gap={20}>
             <Flex gap={10}>
               <Text color="#171717" fontFamily="Gopher" fontSize="48px" fontWeight="700">{proposals.name}</Text>
-              <Image src={proposals.logo} alt="" />
+              <Image src={proposals.logo} alt="" width={"50px"} height={"50px"} style={{margin: "8px 0"}}/>
             </Flex>
             <Button
              bg={getStatusColor(proposals.status)}
@@ -208,64 +232,15 @@ const ProjectListDetail = () => {
               <Box>
                 <Text color="#404040" fontWeight="500" fontSize="16px" mt="24px">Equity offered</Text>
 
-                <Text fontSize="48px" fontWeight={700} color="#171717" mt="4px">{proposals.equity_offered}</Text>
+                <Text fontSize="48px" fontWeight={700} color="#171717" mt="4px">{proposals.equity_offered.toLocaleString()}</Text>
               </Box>
               <Box>
                 <Text color="#404040" fontWeight="500" fontSize="16px" mt="24px">Funding Request</Text>
 
-                <Text fontSize="48px" fontWeight={700} color="#171717" mt="4px">{proposals.funding_request}</Text>
+                <Text fontSize="48px" fontWeight={700} color="#171717" mt="4px">{Number(proposals.funding_request.toFixed()).toLocaleString()}</Text>
               </Box>
-            </Flex>
           </Flex>
         </Flex>
-        </> */}
-
-        <>
-        {detail && (
-        <Flex flexDir="column" flex="1 1">
-           <HStack justifyContent={"space-between"} pr={12}>
-         
-            <Flex gap={10}>
-             <Text color="#171717" fontFamily="Gopher" fontSize="48px" fontWeight="700">{detail.name}</Text>
-             <Image src={detail.productLogo} alt=""  />
-            </Flex>
-            <Button
-              bg={getStatusColor(detail.status)}
-              _hover={{ bg: getStatusColor(detail.status) }}
-              borderRadius="10px"
-              color={getStatusColorText(detail.status)}
-              w="96px"
-              h="40px"
-             >
-            <Text fontSize="16px" fontWeight="500" fontFamily="Gopher">
-             {getStatusLabel(detail.status)}
-            </Text>
-          </Button>
-           </HStack>
-          <Text
-           fontFamily="Gopher"
-           fontSize="16px"  
-           fontWeight="700"
-           lineHeight="20px"
-           mt="20px"
-           maxW={"700px"}
-          >
-          {detail.description}
-          </Text>
-          <Flex justifyContent={"space-between"} pr={12}>
-            <Box>
-              <Text color="#404040" fontWeight="500" fontSize="16px" mt="24px">Equity offered</Text>
-
-              <Text fontSize="48px" fontWeight={700} color="#171717" mt="4px">{detail.equityOffered}</Text>
-            </Box>
-            <Box>
-              <Text color="#404040" fontWeight="500" fontSize="16px" mt="24px">Funding Request</Text>
-
-              <Text fontSize="48px" fontWeight={700} color="#171717" mt="4px">{detail.equityOffered}</Text>
-            </Box>
-          </Flex>
-        </Flex>
-        )}
         </>
       </HStack>
 

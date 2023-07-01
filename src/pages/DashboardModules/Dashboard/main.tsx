@@ -23,14 +23,17 @@ const Dashboard = () => {
       address
     ]
   })
+
+  console.log(dashboardData, "investors");
+  
   
   const getDashboardData = useCallback(() => {
     if(!dashboardData) return null;
 
     setdashboard({
-      projectFunded: hexToDecimal(dashboardData[0]),
-      shareCount: hexToDecimal(dashboardData[1]),
-      amountSpent: hexToDecimal(dashboardData[2])
+      projectFunded: Number(dashboardData[0]),
+      shareCount: Number(dashboardData[1]),
+      amountSpent: Number(dashboardData[2]) / 1e18
     })
 
   }, [dashboardData])
@@ -95,7 +98,7 @@ const Dashboard = () => {
 
       <Flex flexDir="column" align="center">
         <Text color="#171717" fontSize="18px" fontWeight="500">Amount Spent</Text>
-        <Text color="#171717" fontSize="48px" fontFamily="Gopher2" fontWeight="700">${(dashboard?.amountSpent)?.toFixed(2)}</Text>
+        <Text color="#171717" fontSize="48px" fontFamily="Gopher2" fontWeight="700">${Number((dashboard?.amountSpent)?.toFixed(1)).toLocaleString()}</Text>
       </Flex>
 
       <Box border="0.1px solid #404040"></Box>

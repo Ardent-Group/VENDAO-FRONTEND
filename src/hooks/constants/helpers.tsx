@@ -44,3 +44,11 @@ export const getStatusLabel = (status: any) => {
         return "Unknown";
     }
 };
+
+export const setLimit = (length:any, limit:any) => {
+  if(length > limit) {
+    return Math.abs(length - limit);
+  } else {
+    return 0;
+  }
+}

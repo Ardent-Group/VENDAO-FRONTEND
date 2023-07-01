@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { VENDAO_SVG } from "../assets/svg";
-import { getStatusColor, getStatusColorText, getStatusLabel, hexToDecimal, makeUrl } from "../hooks/constants/helpers";
+import { getStatusColor, getStatusColorText, getStatusLabel, makeUrl } from "../hooks/constants/helpers";
 import {
     Button,
     Divider,
@@ -9,11 +9,11 @@ import {
     Text
 } from "@chakra-ui/react";
 import useCallVendao from '../hooks/contract/useCallVendao';
+import { useNavigate } from 'react-router-dom';
 
 
 interface proposalProps {
     id: number;
-    clickView: any;
 }
 
 interface proposalTypes {
@@ -28,6 +28,15 @@ interface proposalTypes {
 
 
 const ProposalTemplate = (props:proposalProps) => {
+    const navigate = useNavigate()
+
+
+    const handleClickView = (id: number) => {
+        navigate(`/product/${id}`);
+        // Scroll back to top
+        window.scrollTo(0, 0);
+    };
+
 
     const [proposalData, setProposalData] = useState<proposalTypes>({
         status: null,
@@ -46,6 +55,9 @@ const ProposalTemplate = (props:proposalProps) => {
         ]
     })
 
+    console.log(data);
+    
+
     const getProjectProposals = useCallback(async () => {
         if(data){
             const url = makeUrl(data[0]);
@@ -53,13 +65,13 @@ const ProposalTemplate = (props:proposalProps) => {
             const metadata = await respond.json();
 
             setProposalData({
-                status: hexToDecimal(data[5]?._hex),
+                status: Number(data[5]),
                 name: metadata.name,
                 logo: makeUrl(metadata.image),
                 description: metadata.description,
-                equity_offered: hexToDecimal(data[7]?._hex),
-                funding_request: hexToDecimal(data[6]?._hex),
-                approval_count: hexToDecimal(data[4]?._hex)
+                equity_offered: Number(data[7]) / 10e18,
+                funding_request: Number(data[6]) / 10e18,
+                approval_count: Number(data[4])
             })
         }
     }, [data])
@@ -111,7 +123,7 @@ const ProposalTemplate = (props:proposalProps) => {
              maxW="600px"
              textAlign="start"
             >
-                {(proposalData.description).slice(0, 200)}
+                {(proposalData.description).slice(0, 200)} .....
             </Text>
             <Divider border="0.5px solid #404040" mt="15px" />
             <Flex
@@ -144,7 +156,7 @@ const ProposalTemplate = (props:proposalProps) => {
                  _hover={{ bg: "#8AE400" }}
                  w="56px"
                  h="50px"
-                 onClick={() => props.clickView}
+                 onClick={() => handleClickView(props.id)}
                 >
                     {VENDAO_SVG().arrowRight()}
                 </Button>

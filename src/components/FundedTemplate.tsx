@@ -105,7 +105,7 @@ export const FundedTemplate = (props:productProps) => {
                      fontFamily="Gopher2"
                      mt="10px"
                     >
-                        {(projectData.amount_funded).toLocaleString()}
+                        Amount funded ${Number((projectData.amount_funded).toFixed()).toLocaleString()}
                     </Text>
                     <Button
                      mt="12px"

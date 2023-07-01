@@ -24,7 +24,7 @@ const JoinDAO = ({isOpen, onClose}: any) => {
 
   const toast = useToast();
 
-  const DAO_FEE = parseEther("2");
+  const DAO_FEE = parseEther("0.5");
 
   const { venWrite, venLoading, waitError, waitSuccess, waitLoading } = useSendVendao({
     functionName: "joinDAO",
@@ -48,7 +48,8 @@ const JoinDAO = ({isOpen, onClose}: any) => {
         description: "Error joining Ven DAO",
         status: "error",
         duration: 5000,
-        isClosable: true
+        isClosable: true,
+        position: "top"
       })
     } 
     if(waitSuccess && rerun) {
@@ -57,14 +58,15 @@ const JoinDAO = ({isOpen, onClose}: any) => {
         description: "You have succesfully joined Ven DAO",
         status: "success",
         duration: 5000,
-        isClosable: true
+        isClosable: true,
+        position: "top"
       })
     }
   
     return () => {
       rerun = false;
     }
-  }, [waitError, waitSuccess, toast])
+  }, [waitError, waitSuccess])
   
 
   return (

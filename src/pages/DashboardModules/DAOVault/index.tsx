@@ -26,8 +26,9 @@ const DAOVault = () => {
   const { data } = useCallVendao({
     functionName: "DAO_FTM_BALANCE"
   })
+  
 
-  const { data: getUSDT } = useContractRead({
+  const { data:getUSDT } = useContractRead({
     address: USDTCA,
     abi: usdtABI,
     functionName: "balanceOf",
@@ -36,7 +37,7 @@ const DAOVault = () => {
     ]
   })
 
-  const { data: getUSDC } = useContractRead({
+  const { data:getUSDC } = useContractRead({
     address: USDCCA,
     abi: usdcABI,
     functionName: "balanceOf",
@@ -56,18 +57,24 @@ const DAOVault = () => {
   }
   
   const vaultData = useCallback(async () => {
-    if(data && getUSDT && getUSDC ) {
-      const price:any = getPrice("tether");
-      const ftmPrice:any = getPrice("fantom")
-      const usd:any = getPrice("usd-coin")
+    if(data || getUSDT || getUSDC ) {
+      const price:any = await getPrice("tether");
+      const ftmPrice:any = await getPrice("fantom")
+      const usd:any = await getPrice("usd-coin")
+
+      console.log(await ftmPrice, "ftm");
+      
 
       setVault({
-        usdt_bal: (hexToDecimal(getUSDT) * price),
-        ftm_bal: (hexToDecimal(data) * ftmPrice),
-        usdc_bal: (hexToDecimal(getUSDC) * usd)
+        usdt_bal: ((Number(getUSDT) / 1e18) * price),
+        ftm_bal: ((Number(data) / 1e18) * ftmPrice),
+        usdc_bal: ((Number(getUSDC) / 1e18) * usd)
       })
     }
   }, [data, getUSDC, getUSDT])
+
+  console.log(vault.ftm_bal, "jdks");
+  
 
   useEffect(() => {
     vaultData();

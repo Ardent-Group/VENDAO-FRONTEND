@@ -3,7 +3,7 @@ import venAccessABI from "../constants/abi/venAccess.abi.json"
 import { callVendaoProps } from './useCallVendao';
 
 
-export const venAccessCA = "0x48fb4A83c7328c63C6eb8500e1293A05E94d4746";
+export const venAccessCA = "0x1053F0cB7b61B977a496156B555E3745084AA8E5";
 
 const useCallVenAccess = ({functionName, args, watch}: callVendaoProps) => {
 
