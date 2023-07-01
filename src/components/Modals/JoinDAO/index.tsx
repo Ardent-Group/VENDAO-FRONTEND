@@ -17,10 +17,12 @@ import { motion } from 'framer-motion';
 import { parseEther } from 'viem';
 import useSendVendao from '../../../hooks/contract/useSendVendao';
 import { useToast } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 
 const AnimatedButton = motion(Button);
 
 const JoinDAO = ({isOpen, onClose}: any) => {
+  const navigate = useNavigate();
 
   const toast = useToast();
 
@@ -61,12 +63,13 @@ const JoinDAO = ({isOpen, onClose}: any) => {
         isClosable: true,
         position: "top"
       })
+      navigate("/");
     }
   
     return () => {
       rerun = false;
     }
-  }, [waitError, waitSuccess])
+  }, [waitError, waitSuccess, navigate, toast])
   
 
   return (
@@ -92,7 +95,7 @@ const JoinDAO = ({isOpen, onClose}: any) => {
             <Stack mb="20px">
                 <Flex flexDir="column" my={"20px"}>
                   <Text color="16px" fontWeight="600">
-                   You’d be required to deposit 30,000 FTM to join the DAO.
+                   You’d be required to deposit {(Number(DAO_FEE)/1e18).toLocaleString()} FTM to join the DAO.
                    </Text>
                  </Flex>
                 

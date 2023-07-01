@@ -175,11 +175,6 @@ const MakeProposal = () => {
         isClosable: true,
         position: "top"
       })
-
-      setTimeout(
-        navigate("/"),
-        5000
-      )
     }
   
     return () => {
