@@ -3,7 +3,7 @@ import VenVotingABI from "../constants/abi/voting.abi.json"
 import { sendParamsProps } from "./useSendVendao";
 
 
-export const votingCA = "0xc236EC0cE5a3Bc3198e8D0399ecDEFEea273c08D"; 
+export const votingCA = "0xcEAB2452A87eF3FC674789D70ee94a9064E485f0"; 
 
 const useSendVoting = ({functionName, args, value}: sendParamsProps) => {
 

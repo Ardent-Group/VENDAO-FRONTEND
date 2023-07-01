@@ -112,7 +112,7 @@ const ProposalTemplate = (props:proposalProps) => {
              alignItems="center"
             >
                 <Text fontFamily="Gopher" fontSize="20px" fontWeight="700">{proposalData.name}</Text>
-                <Image src={proposalData.logo} alt="" />
+                <Image src={proposalData.logo} alt="" width={"50px"} height={"50px"} />
             </Flex>
             <Text
              fontFamily="Gopher"

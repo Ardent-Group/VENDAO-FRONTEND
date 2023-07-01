@@ -9,7 +9,7 @@ export interface callVendaoProps {
 }
 
 
-export const vendaoCA = "0x6D213862E0152FC9476a7dEEd53a4FD4646d92eE"
+export const vendaoCA = "0xA868107394f8eDfad5418a111eE197be21D2E0af"
 
 const useCallVendao = ({functionName, args, watch}: callVendaoProps) => {
 
