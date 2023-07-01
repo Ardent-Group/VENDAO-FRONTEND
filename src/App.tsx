@@ -11,6 +11,7 @@ import MakeProposal from "./pages/MakeProposal";
 import ProductList from "./pages/ProductList";
 import ProjectListDetail from "./pages/ProductlistDetail";
 import DashboardPanel from "./pages/DashboardModules/Dashboard";
+import InvestorDetails from "./pages/InvestorDetail";
 import {theme} from './constants/theme'
 import Mobile from './assets/json/mobile.json'
 import { useWindowSize } from "rooks";
@@ -44,6 +45,7 @@ export const App = () => {
           <Route path="/product/:id" element={<ProjectListDetail />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/dashboard" element={<DashboardPanel />} />
+          <Route path="/investor/:id" element={<InvestorDetails />} />
         </Routes>
        </Router>
   </ChakraProvider>
