@@ -1,8 +1,8 @@
-## VEN DAO WEBSITE: https://vendao.vercel.app/
-## VEN DAO VIDEO DEMO: 
-
 # VEN DAO DOCUMENTATION  
 This documentation covers the inspiration, purpose, and functionality of Ven DAO.  
+
+### VEN DAO WEBSITE: https://vendao.vercel.app/
+### VEN DAO VIDEO DEMO: 
 
 - [Introduction](#introduction)  
 - [Inspiration](#inspiration)  
