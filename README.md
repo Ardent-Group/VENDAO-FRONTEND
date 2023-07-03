@@ -51,9 +51,6 @@ Along with React, TypeScript was also used in the front-end development of Ven D
 - **IPFS**  
 Project information (images, documents, videos) sent along with proposals by those seeking funding on Ven DAO are stored on IPFS.  
 
-- **AWS Amplify**  
-AWS Amplify is used to host the Dapp website. It can be found [here]()
-
 - **Covalent API**  
 The covalent API is used to get the latest transactions performed by members of Ven DAO.  
 
